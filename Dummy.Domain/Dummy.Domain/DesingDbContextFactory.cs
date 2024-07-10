@@ -8,13 +8,18 @@ namespace Dummy.Domain
     {
         public DummyContext CreateDbContext(string[] args)
         {
+            string environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+
             IConfigurationRoot configuration = new ConfigurationBuilder()
-                .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
-                .AddJsonFile("appsettings.json")
+               .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{environment}.json", optional: true)
                 .Build();
 
             var builder = new DbContextOptionsBuilder<DummyContext>();
-            //builder.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
+            var connectionString = configuration.GetConnectionString("DefaultConnection");
+
+            builder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
 
             return new DummyContext(builder.Options);
         }

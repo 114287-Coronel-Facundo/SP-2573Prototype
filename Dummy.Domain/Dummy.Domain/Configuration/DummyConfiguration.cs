@@ -14,7 +14,7 @@ namespace Dummy.Domain.Configuration
         public void Configure(EntityTypeBuilder<DummyClass> builder)
         {
             
-            builder.ToTable("DummyTable");
+            builder.ToTable("Dummy_Table");
 
             builder.HasKey(p => p.Id);
         }

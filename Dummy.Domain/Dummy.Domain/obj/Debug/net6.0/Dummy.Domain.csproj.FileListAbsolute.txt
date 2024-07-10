@@ -1,0 +1,15 @@
+C:\Proyectos\Maipu\Timm30\Spike2753\SP-2573Prototype\Dummy.Domain\Dummy.Domain\bin\Debug\net6.0\Dummy.Domain.deps.json
+C:\Proyectos\Maipu\Timm30\Spike2753\SP-2573Prototype\Dummy.Domain\Dummy.Domain\bin\Debug\net6.0\Dummy.Domain.runtimeconfig.json
+C:\Proyectos\Maipu\Timm30\Spike2753\SP-2573Prototype\Dummy.Domain\Dummy.Domain\bin\Debug\net6.0\Dummy.Domain.dll
+C:\Proyectos\Maipu\Timm30\Spike2753\SP-2573Prototype\Dummy.Domain\Dummy.Domain\bin\Debug\net6.0\Dummy.Domain.pdb
+C:\Proyectos\Maipu\Timm30\Spike2753\SP-2573Prototype\Dummy.Domain\Dummy.Domain\obj\Debug\net6.0\Dummy.Domain.csproj.AssemblyReference.cache
+C:\Proyectos\Maipu\Timm30\Spike2753\SP-2573Prototype\Dummy.Domain\Dummy.Domain\obj\Debug\net6.0\Dummy.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Proyectos\Maipu\Timm30\Spike2753\SP-2573Prototype\Dummy.Domain\Dummy.Domain\obj\Debug\net6.0\Dummy.Domain.AssemblyInfoInputs.cache
+C:\Proyectos\Maipu\Timm30\Spike2753\SP-2573Prototype\Dummy.Domain\Dummy.Domain\obj\Debug\net6.0\Dummy.Domain.AssemblyInfo.cs
+C:\Proyectos\Maipu\Timm30\Spike2753\SP-2573Prototype\Dummy.Domain\Dummy.Domain\obj\Debug\net6.0\Dummy.Domain.csproj.CoreCompileInputs.cache
+C:\Proyectos\Maipu\Timm30\Spike2753\SP-2573Prototype\Dummy.Domain\Dummy.Domain\obj\Debug\net6.0\Dummy.Domain.sourcelink.json
+C:\Proyectos\Maipu\Timm30\Spike2753\SP-2573Prototype\Dummy.Domain\Dummy.Domain\obj\Debug\net6.0\Dummy.Domain.dll
+C:\Proyectos\Maipu\Timm30\Spike2753\SP-2573Prototype\Dummy.Domain\Dummy.Domain\obj\Debug\net6.0\refint\Dummy.Domain.dll
+C:\Proyectos\Maipu\Timm30\Spike2753\SP-2573Prototype\Dummy.Domain\Dummy.Domain\obj\Debug\net6.0\Dummy.Domain.pdb
+C:\Proyectos\Maipu\Timm30\Spike2753\SP-2573Prototype\Dummy.Domain\Dummy.Domain\obj\Debug\net6.0\Dummy.Domain.genruntimeconfig.cache
+C:\Proyectos\Maipu\Timm30\Spike2753\SP-2573Prototype\Dummy.Domain\Dummy.Domain\obj\Debug\net6.0\ref\Dummy.Domain.dll
