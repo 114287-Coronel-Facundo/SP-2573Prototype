@@ -1,5 +1,14 @@
 using Dummy.Core.AutoMapperConfig;
 using AutoMapper;
+using Dummy.Core.DummyCoreConfiguration;
+using Microsoft.Extensions.Configuration;
+using Dummy.Core.Model;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Dummy.Core.Repositories.IRepositories;
+using Dummy.Core.Repositories;
+using Dummy.Core.Services.IServices;
+using Dummy.Core.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,7 +20,14 @@ builder.Services.AddRazorPages();
 builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 #endregion
 
+var conn = builder.Configuration.GetConnectionString("DefaultConnection");
+//builder.Services.Add(DummyServiceConfiguration.ConfigureDummyService(conn));
+builder.Services.AddDbContext<DomainContext>(options => options.UseMySql(conn, ServerVersion.AutoDetect(conn)));
 
+#region
+builder.Services.AddScoped<IDummyRepository, DummyRepository>();
+builder.Services.AddScoped<IDummyService, DummyService>();
+#endregion
 
 
 var app = builder.Build();

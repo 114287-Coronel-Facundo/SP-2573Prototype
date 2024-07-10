@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Dummy.Core.Repositories.IRepositories
 {
-    internal interface IDummyRepository
+    public interface IDummyRepository
     {
     }
 }

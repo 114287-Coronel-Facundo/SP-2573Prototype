@@ -13,10 +13,14 @@ namespace Dummy.Core.DummyCoreConfiguration
 {
     public static class DummyServiceConfiguration
     {
-        public static IServiceCollection ConfigureDummyService(this IServiceCollection serviceDescriptors, string connectionString)
+        public static IServiceCollection ConfigureDummyService(this IServiceCollection serviceDescriptors, string? conn)
         {
             serviceDescriptors.AddScoped<IDummyRepository, DummyRepository>();
             serviceDescriptors.AddScoped<IDummyService, DummyService>();
+
+
+
+            return serviceDescriptors;
 
         }
     }

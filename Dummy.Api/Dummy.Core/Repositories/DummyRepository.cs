@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Dummy.Core.Repositories
 {
-    internal class DummyRepository : IDummyRepository
+    public class DummyRepository : IDummyRepository
     {
     }
 }

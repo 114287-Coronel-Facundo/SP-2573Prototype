@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Dummy.Core.Services
 {
-    internal class DummyService : IDummyService
+    public class DummyService : IDummyService
     {
     }
 }
