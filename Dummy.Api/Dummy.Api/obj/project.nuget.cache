@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "6w2E0iyqHVYpfrUlAGB5fLbCZYd9QSa7SLiFw4QDYvDeSKyHwtw448c7TD6QYSRoFXSwUIKE/6lraitnqv4V6w==",
+  "dgSpecHash": "BI9GZlkyGhWF2mScKod2oaw2VsD82j7/gJdAwO60R7RHHN7/0FZPoZyq1lXnflQkBt2C3OEmFUI+Kd5yJKzGUQ==",
   "success": true,
   "projectFilePath": "C:\\Proyectos\\Maipu\\Timm30\\Spike2753\\SP-2573Prototype\\Dummy.Api\\Dummy.Api\\Dummy.Api.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\facundo.coronel\\.nuget\\packages\\automapper\\11.0.1\\automapper.11.0.1.nupkg.sha512",
+    "C:\\Users\\facundo.coronel\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\11.0.0\\automapper.extensions.microsoft.dependencyinjection.11.0.0.nupkg.sha512",
     "C:\\Users\\facundo.coronel\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\facundo.coronel\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
     "C:\\Users\\facundo.coronel\\.nuget\\packages\\microsoft.entityframeworkcore\\6.0.8\\microsoft.entityframeworkcore.6.0.8.nupkg.sha512",

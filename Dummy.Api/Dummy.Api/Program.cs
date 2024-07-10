@@ -1,7 +1,18 @@
+using Dummy.Core.AutoMapperConfig;
+using AutoMapper;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+
+
+#region automapper
+builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
+#endregion
+
+
+
 
 var app = builder.Build();
 
