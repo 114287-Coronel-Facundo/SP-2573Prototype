@@ -1,13 +1,12 @@
 using Dummy.Core.AutoMapperConfig;
 using Dummy.Core.Model;
-using EvoltisTL.AuditDomain;
-using EvoltisTL.AuditDomain.Interceptor;
-using Microsoft.EntityFrameworkCore;
-using AutoMapper;
-using Dummy.Core.Repositories.IRepositories;
 using Dummy.Core.Repositories;
-using Dummy.Core.Services.IServices;
+using Dummy.Core.Repositories.IRepositories;
 using Dummy.Core.Services;
+using Dummy.Core.Services.IServices;
+using EvoltisTL.AuditDomain.Application.Auditing;
+using EvoltisTL.AuditDomain.Infraestructure.Persistence;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
