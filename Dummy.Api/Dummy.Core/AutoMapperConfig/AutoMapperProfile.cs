@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Dummy.Core.Model.Classes;
+using Dummy.Core.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +14,10 @@ namespace Dummy.Core.AutoMapperConfig
         public AutoMapperProfile()
         {
             //TODO:Configuration
+
+            CreateMap<Product, ProductViewModel>();
+            CreateMap<ProductViewModel, Product>();
+
         }
     }
 }
