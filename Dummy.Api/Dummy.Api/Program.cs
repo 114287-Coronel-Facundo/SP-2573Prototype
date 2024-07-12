@@ -5,12 +5,10 @@ using Dummy.Core.Repositories.IRepositories;
 using Dummy.Core.Services;
 using Dummy.Core.Services.IServices;
 using EvoltisTL.AuditDomain.Application.Auditing;
-using EvoltisTL.AuditDomain.Application.Service;
 using EvoltisTL.AuditDomain.Infraestructure.Persistence;
 using EvoltisTL.AuditDomain.Infraestructure.Repositories;
 using EvoltisTL.AuditDomain.Infraestructure.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Diagnostics;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,9 +37,10 @@ builder.Services.AddDbContext<DomainContext>((serviceProvider, options) =>
     var interceptor = serviceProvider.GetRequiredService<AuditSaveChangesInterceptor>();
     options.AddInterceptors(interceptor);
 });
-#endregion
+
 
 builder.Services.AddDbContext<AuditDbContext>(options => options.UseMySql(connAudit, ServerVersion.AutoDetect(connAudit)));
+#endregion
 
 #region
 
