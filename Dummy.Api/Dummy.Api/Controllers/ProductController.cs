@@ -28,5 +28,11 @@ namespace Dummy.Api.Controllers
             return Ok(_productService.PutProduct(product).Result);
         }
 
+        [HttpDelete]
+        public async Task<IActionResult> Delete(int productId)
+        {
+            return Ok(_productService.DeleteProduct(productId).Result);
+        }
+
     }
 }

@@ -21,6 +21,14 @@ namespace Dummy.Core.Repositories
             this.domainContext = domainContext;
             _mapper = mapper;
         }
+
+        public async Task<bool> DeleteProduct(int productId)
+        {
+            domainContext.Products.Remove(domainContext.Products.FirstOrDefault(p => p.Id == productId));
+            domainContext.SaveChanges();
+            return true;
+        }
+
         public async Task<ProductViewModel> PostProduct(ProductViewModel product)
         {
             var produtToPost = _mapper.Map<Product>(product);

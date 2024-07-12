@@ -14,6 +14,11 @@ namespace Dummy.Core.Services
             _productRepository = productRepository;
         }
 
+        public async Task<bool> DeleteProduct(int productId)
+        {
+            return await _productRepository.DeleteProduct(productId);
+        }
+
         public Task<ProductViewModel> PostProduct(ProductViewModel productViewModel)
         {
             return _productRepository.PostProduct(productViewModel);

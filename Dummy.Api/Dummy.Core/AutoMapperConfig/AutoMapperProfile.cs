@@ -18,6 +18,9 @@ namespace Dummy.Core.AutoMapperConfig
             CreateMap<Product, ProductViewModel>();
             CreateMap<ProductViewModel, Product>();
 
+            CreateMap<Company, CompanyViewModel>();
+            CreateMap<CompanyViewModel, Company>();
+
         }
     }
 }

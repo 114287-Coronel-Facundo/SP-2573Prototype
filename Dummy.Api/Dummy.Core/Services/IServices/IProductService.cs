@@ -11,5 +11,6 @@ namespace Dummy.Core.Services.IServices
     {
         Task<ProductViewModel> PostProduct(ProductViewModel productViewModel);
         Task<ProductViewModel> PutProduct(ProductViewModel productViewModel);
+        Task<bool> DeleteProduct(int productId);
     }
 }

@@ -12,5 +12,6 @@ namespace Dummy.Core.Repositories.IRepositories
     {
         Task<ProductViewModel> PostProduct(ProductViewModel product);
         Task<ProductViewModel> PutProduct(ProductViewModel product);
+        Task<bool> DeleteProduct(int productId);
     }
 }

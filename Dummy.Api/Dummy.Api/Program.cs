@@ -51,6 +51,9 @@ builder.Services.AddScoped<IDummyService, DummyService>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IProductService, ProductService>();
 
+builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();
+builder.Services.AddScoped<ICompanyService, CompanyService>();
+
 
 builder.Services.AddScoped<IAuditLogRepository, AuditLogRepository>();
 //builder.Services.AddScoped<IGetInstanceRepository, GetInstanceRepository>();
