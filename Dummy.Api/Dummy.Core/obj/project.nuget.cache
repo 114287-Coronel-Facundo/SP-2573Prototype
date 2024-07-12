@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "p5TgbJVm+STsPwVX4m/bhMANv1rn76GLYrUY8IJMfL63mxf/J+izDmMHEw89rGHNYO9pc1tJIEQtgLhFCjDKEA==",
+  "dgSpecHash": "K9AiJjNHIdgTt/4Zx3Z5dqCTbdHqdZh6wa1XWKfrTfSDuUX50FKfqDgy1iz0Mk61ZDO7py59B34/c96S8ecfrg==",
   "success": true,
   "projectFilePath": "C:\\Proyectos\\Maipu\\Timm30\\Spike2753\\SP-2573Prototype\\Dummy.Api\\Dummy.Core\\Dummy.Core.csproj",
   "expectedPackageFiles": [
@@ -10,10 +10,10 @@
     "C:\\Users\\facundo.coronel\\.nuget\\packages\\microsoft.entityframeworkcore\\6.0.28\\microsoft.entityframeworkcore.6.0.28.nupkg.sha512",
     "C:\\Users\\facundo.coronel\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\6.0.28\\microsoft.entityframeworkcore.abstractions.6.0.28.nupkg.sha512",
     "C:\\Users\\facundo.coronel\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\6.0.28\\microsoft.entityframeworkcore.analyzers.6.0.28.nupkg.sha512",
-    "C:\\Users\\facundo.coronel\\.nuget\\packages\\microsoft.entityframeworkcore.design\\6.0.8\\microsoft.entityframeworkcore.design.6.0.8.nupkg.sha512",
+    "C:\\Users\\facundo.coronel\\.nuget\\packages\\microsoft.entityframeworkcore.design\\6.0.28\\microsoft.entityframeworkcore.design.6.0.28.nupkg.sha512",
     "C:\\Users\\facundo.coronel\\.nuget\\packages\\microsoft.entityframeworkcore.dynamiclinq\\6.2.19\\microsoft.entityframeworkcore.dynamiclinq.6.2.19.nupkg.sha512",
     "C:\\Users\\facundo.coronel\\.nuget\\packages\\microsoft.entityframeworkcore.relational\\6.0.28\\microsoft.entityframeworkcore.relational.6.0.28.nupkg.sha512",
-    "C:\\Users\\facundo.coronel\\.nuget\\packages\\microsoft.entityframeworkcore.tools\\6.0.8\\microsoft.entityframeworkcore.tools.6.0.8.nupkg.sha512",
+    "C:\\Users\\facundo.coronel\\.nuget\\packages\\microsoft.entityframeworkcore.tools\\6.0.28\\microsoft.entityframeworkcore.tools.6.0.28.nupkg.sha512",
     "C:\\Users\\facundo.coronel\\.nuget\\packages\\microsoft.extensions.caching.abstractions\\6.0.0\\microsoft.extensions.caching.abstractions.6.0.0.nupkg.sha512",
     "C:\\Users\\facundo.coronel\\.nuget\\packages\\microsoft.extensions.caching.memory\\6.0.1\\microsoft.extensions.caching.memory.6.0.1.nupkg.sha512",
     "C:\\Users\\facundo.coronel\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\6.0.0\\microsoft.extensions.configuration.abstractions.6.0.0.nupkg.sha512",

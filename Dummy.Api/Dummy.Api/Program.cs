@@ -5,8 +5,12 @@ using Dummy.Core.Repositories.IRepositories;
 using Dummy.Core.Services;
 using Dummy.Core.Services.IServices;
 using EvoltisTL.AuditDomain.Application.Auditing;
+using EvoltisTL.AuditDomain.Application.Service;
 using EvoltisTL.AuditDomain.Infraestructure.Persistence;
+using EvoltisTL.AuditDomain.Infraestructure.Repositories;
+using EvoltisTL.AuditDomain.Infraestructure.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,14 +28,20 @@ builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 #endregion
 
 var conn = builder.Configuration.GetConnectionString("DefaultConnection");
-//builder.Services.Add(DummyServiceConfiguration.ConfigureDummyService(conn));
-builder.Services.AddDbContext<DomainContext>(options => {
-    options.UseMySql(conn, ServerVersion.AutoDetect(conn));
-    options.AddInterceptors(new AuditSaveChangesInterceptor(new AuditDbContext()/*, new DomainContext()*/));
-});
+var connAudit = builder.Configuration.GetConnectionString("DefaultAuditConnection");
 
-//builder.Services.AddDbContext<DomainContext>(options => 
-//    options.UseMySql(conn, ServerVersion.AutoDetect(conn)));
+#region DbContext
+builder.Services.AddScoped<AuditSaveChangesInterceptor>();
+
+builder.Services.AddDbContext<DomainContext>((serviceProvider, options) =>
+{
+    options.UseMySql(conn, ServerVersion.AutoDetect(conn));
+    var interceptor = serviceProvider.GetRequiredService<AuditSaveChangesInterceptor>();
+    options.AddInterceptors(interceptor);
+});
+#endregion
+
+builder.Services.AddDbContext<AuditDbContext>(options => options.UseMySql(connAudit, ServerVersion.AutoDetect(connAudit)));
 
 #region
 
@@ -40,6 +50,10 @@ builder.Services.AddScoped<IDummyService, DummyService>();
 
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IProductService, ProductService>();
+
+
+builder.Services.AddScoped<IAuditLogRepository, AuditLogRepository>();
+//builder.Services.AddScoped<IGetInstanceRepository, GetInstanceRepository>();
 #endregion
 
 
