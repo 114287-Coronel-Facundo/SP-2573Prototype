@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Dummy.Core.Model;
 using Dummy.Core.Model.Classes;
+using Dummy.Core.Repositories.IRepositories;
 using Dummy.Core.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Dummy.Core.Repositories.IRepositories
+namespace Dummy.Core.Repositories
 {
     public class CompanyRepository : ICompanyRepository
     {
