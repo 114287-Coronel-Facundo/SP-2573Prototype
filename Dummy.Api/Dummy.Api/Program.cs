@@ -32,7 +32,8 @@ builder.Services.AddSwaggerGen();
 builder.Services
     .AddHealthChecks()
     .AddCheck<ServerHealthCheck>(nameof(ServerHealthCheck))
-    .AddCheck<DbHealthCheck>(nameof(DbHealthCheck));
+    .AddCheck<DbHealthCheck>(nameof(DbHealthCheck))
+    .AddCheck<ApiHealthCheck>("Api products");
 
 builder.Services
     .AddHealthChecksUI(options =>
@@ -45,6 +46,7 @@ builder.Services.Configure<HealthCheckPublisherOptions>(options =>
 {
     options.Period = TimeSpan.FromSeconds(2);
 });
+builder.Services.AddSingleton<IHealthCheck, DbHealthCheck>();
 
 builder.Services.AddScoped<ServerHealthCheck>();
 #endregion
