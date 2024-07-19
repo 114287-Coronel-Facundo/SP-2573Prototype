@@ -10,6 +10,14 @@ using EvoltisTL.AuditDomain.Infraestructure.Persistence;
 using EvoltisTL.AuditDomain.Infraestructure.Repositories;
 using EvoltisTL.AuditDomain.Infraestructure.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
+using HealthChecks.ApplicationStatus.DependencyInjection;
+using HealthChecks.UI.Client;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Dummy.Api.HealtCheck;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Builder;
+using Dummy.Api.Controllers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,7 +28,21 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+#region healtcheck
+builder.Services
+    .AddHealthChecks()
+    .AddCheck<ServerHealthCheck>(nameof(ServerHealthCheck))
+    .AddCheck<DbHealthCheck>(nameof(DbHealthCheck));
 
+builder.Services
+    .AddHealthChecksUI(options =>
+    {
+        options.AddHealthCheckEndpoint("Healthcheck API", "/healthcheck");
+    })
+    .AddInMemoryStorage();
+
+builder.Services.AddScoped<ServerHealthCheck>();
+#endregion
 
 #region automapper
 builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
@@ -66,6 +88,18 @@ builder.Services.AddScoped<IAuditLogRepository, AuditLogRepository>();
 
 
 var app = builder.Build();
+
+//app.MapHealthChecks("/health", new()
+//{
+//    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+//});
+
+app.MapHealthChecks("/healthcheck", new()
+{
+    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+});
+
+app.MapHealthChecksUI(options => options.UIPath = "/dashboard");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
