@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 
 namespace Dummy.Core.Repositories.IRepositories
 {
-    public interface ICompanyRepository
+    public
+        interface ICompanyRepository
     {
         Task<CompanyViewModel> PostCompany(CompanyViewModel company);
         Task<CompanyViewModel> PutCompany(CompanyViewModel company);

@@ -274,6 +274,7 @@
       "Dummy.Core/1.0.0": {
         "dependencies": {
           "AutoMapper": "11.0.1",
+          "EvoltisTL.AuditDomain": "1.0.0",
           "Microsoft.EntityFrameworkCore.DynamicLinq": "6.2.19",
           "Pomelo.EntityFrameworkCore.MySql": "6.0.3"
         },
@@ -283,7 +284,6 @@
       },
       "EvoltisTL.AuditDomain/1.0.0": {
         "dependencies": {
-          "Dummy.Core": "1.0.0",
           "Microsoft.EntityFrameworkCore": "6.0.28",
           "Pomelo.EntityFrameworkCore.MySql": "6.0.3"
         },

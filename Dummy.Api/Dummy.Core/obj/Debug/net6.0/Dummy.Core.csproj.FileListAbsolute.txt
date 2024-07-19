@@ -13,3 +13,6 @@ C:\Proyectos\Maipu\Timm30\Spike2753\SP-2573Prototype\Dummy.Api\Dummy.Core\obj\De
 C:\Proyectos\Maipu\Timm30\Spike2753\SP-2573Prototype\Dummy.Api\Dummy.Core\obj\Debug\net6.0\Dummy.Core.pdb
 C:\Proyectos\Maipu\Timm30\Spike2753\SP-2573Prototype\Dummy.Api\Dummy.Core\obj\Debug\net6.0\Dummy.Core.genruntimeconfig.cache
 C:\Proyectos\Maipu\Timm30\Spike2753\SP-2573Prototype\Dummy.Api\Dummy.Core\obj\Debug\net6.0\ref\Dummy.Core.dll
+C:\Proyectos\Maipu\Timm30\Spike2753\SP-2573Prototype\Dummy.Api\Dummy.Core\bin\Debug\net6.0\EvoltisTL.AuditDomain.dll
+C:\Proyectos\Maipu\Timm30\Spike2753\SP-2573Prototype\Dummy.Api\Dummy.Core\bin\Debug\net6.0\EvoltisTL.AuditDomain.pdb
+C:\Proyectos\Maipu\Timm30\Spike2753\SP-2573Prototype\Dummy.Api\Dummy.Core\obj\Debug\net6.0\Dummy.Core.csproj.CopyComplete

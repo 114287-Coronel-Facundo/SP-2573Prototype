@@ -16,4 +16,8 @@
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="6.0.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\SP-2753Audit\EvoltisTL.AuditDomain\EvoltisTL.AuditDomain\EvoltisTL.AuditDomain.csproj" />
+  </ItemGroup>
+
 </Project>

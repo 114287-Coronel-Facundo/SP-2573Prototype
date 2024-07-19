@@ -9,6 +9,7 @@
       "Dummy.Core/1.0.0": {
         "dependencies": {
           "AutoMapper": "11.0.1",
+          "EvoltisTL.AuditDomain": "1.0.0",
           "Microsoft.EntityFrameworkCore.DynamicLinq": "6.2.19",
           "Microsoft.EntityFrameworkCore.Tools": "6.0.28",
           "Pomelo.EntityFrameworkCore.MySql": "6.0.3"
@@ -252,7 +253,16 @@
           }
         }
       },
-      "System.Runtime.CompilerServices.Unsafe/6.0.0": {}
+      "System.Runtime.CompilerServices.Unsafe/6.0.0": {},
+      "EvoltisTL.AuditDomain/1.0.0": {
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore": "6.0.28",
+          "Pomelo.EntityFrameworkCore.MySql": "6.0.3"
+        },
+        "runtime": {
+          "EvoltisTL.AuditDomain.dll": {}
+        }
+      }
     }
   },
   "libraries": {
@@ -435,6 +445,11 @@
       "sha512": "sha512-/iUeP3tq1S0XdNNoMz5C9twLSrM/TH+qElHkXWaPvuNOt+99G75NrV0OS2EqHx5wMN7popYjpc8oTjC1y16DLg==",
       "path": "system.runtime.compilerservices.unsafe/6.0.0",
       "hashPath": "system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512"
+    },
+    "EvoltisTL.AuditDomain/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
     }
   }
 }

@@ -116,7 +116,11 @@
         "frameworks": {
           "net6.0": {
             "targetAlias": "net6.0",
-            "projectReferences": {}
+            "projectReferences": {
+              "C:\\Proyectos\\Maipu\\Timm30\\Spike2753\\SP-2753Audit\\EvoltisTL.AuditDomain\\EvoltisTL.AuditDomain\\EvoltisTL.AuditDomain.csproj": {
+                "projectPath": "C:\\Proyectos\\Maipu\\Timm30\\Spike2753\\SP-2753Audit\\EvoltisTL.AuditDomain\\EvoltisTL.AuditDomain\\EvoltisTL.AuditDomain.csproj"
+              }
+            }
           }
         },
         "warningProperties": {
@@ -191,11 +195,7 @@
         "frameworks": {
           "net6.0": {
             "targetAlias": "net6.0",
-            "projectReferences": {
-              "C:\\Proyectos\\Maipu\\Timm30\\Spike2753\\SP-2573Prototype\\Dummy.Api\\Dummy.Core\\Dummy.Core.csproj": {
-                "projectPath": "C:\\Proyectos\\Maipu\\Timm30\\Spike2753\\SP-2573Prototype\\Dummy.Api\\Dummy.Core\\Dummy.Core.csproj"
-              }
-            }
+            "projectReferences": {}
           }
         },
         "warningProperties": {

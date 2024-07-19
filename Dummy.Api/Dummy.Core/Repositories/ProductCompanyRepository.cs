@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using Dummy.Core.Model;
+using Dummy.Core.Model.Classes;
 using Dummy.Core.Repositories.IRepositories;
 using Dummy.Core.ViewModels;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,17 +26,45 @@ namespace Dummy.Core.Repositories
         public async Task<bool> Delete(int id)
         {
             domainContext.ProductsCompanies.Remove(domainContext.ProductsCompanies.FirstOrDefault(pc => pc.Id == id));
+            await domainContext.SaveChangesAsync();
             return true;
         }
 
-        public Task<ProductCompanyViewModel> Post(ProductCompanyViewModel model)
+        public async Task<ProductCompanyViewModel> Post(ProductCompanyViewModel model)
         {
-            throw new NotImplementedException();
+            //var toPost = mapper.Map<ProductsCompany>(model);
+            //domainContext.Add(toPost);
+            //await domainContext.SaveChangesAsync();
+            //return model;
+            using (var context = domainContext.Database.BeginTransaction())
+            {
+                try
+                {
+                    var toPost = mapper.Map<ProductsCompany>(model);
+                    domainContext.Add(toPost);
+                    await domainContext.SaveChangesAsync();
+                    //context.Commit();
+                    context.Commit();
+                    return model;
+                }
+                catch (Exception ex)
+                {
+                    context.Rollback();
+                    throw ex;
+                }
+
+            }
         }
 
-        public Task<ProductCompanyViewModel> Put(ProductCompanyViewModel model)
+        public async Task<ProductCompanyViewModel> Put(ProductCompanyViewModel model)
         {
-            throw new NotImplementedException();
+            var entity = domainContext.ProductsCompanies.FirstOrDefault(x => x.Id == model.Id);
+            entity.ProductId = model.ProductId;
+            entity.CompanyId = model.CompanyId;
+
+            domainContext.Update(entity);
+            await domainContext.SaveChangesAsync();
+            return model;
         }
     }
 }

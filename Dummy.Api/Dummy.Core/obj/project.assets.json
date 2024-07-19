@@ -410,6 +410,20 @@
         "build": {
           "buildTransitive/netcoreapp3.1/_._": {}
         }
+      },
+      "EvoltisTL.AuditDomain/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore": "6.0.28",
+          "Pomelo.EntityFrameworkCore.MySql": "6.0.3"
+        },
+        "compile": {
+          "bin/placeholder/EvoltisTL.AuditDomain.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/EvoltisTL.AuditDomain.dll": {}
+        }
       }
     }
   },
@@ -1014,11 +1028,17 @@
         "system.runtime.compilerservices.unsafe.nuspec",
         "useSharedDesignerContext.txt"
       ]
+    },
+    "EvoltisTL.AuditDomain/1.0.0": {
+      "type": "project",
+      "path": "../../../SP-2753Audit/EvoltisTL.AuditDomain/EvoltisTL.AuditDomain/EvoltisTL.AuditDomain.csproj",
+      "msbuildProject": "../../../SP-2753Audit/EvoltisTL.AuditDomain/EvoltisTL.AuditDomain/EvoltisTL.AuditDomain.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net6.0": [
       "AutoMapper >= 11.0.1",
+      "EvoltisTL.AuditDomain >= 1.0.0",
       "Microsoft.EntityFrameworkCore.DynamicLinq >= 6.2.19",
       "Microsoft.EntityFrameworkCore.Tools >= 6.0.28",
       "Pomelo.EntityFrameworkCore.MySql >= 6.0.3"
@@ -1050,7 +1070,11 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Proyectos\\Maipu\\Timm30\\Spike2753\\SP-2753Audit\\EvoltisTL.AuditDomain\\EvoltisTL.AuditDomain\\EvoltisTL.AuditDomain.csproj": {
+              "projectPath": "C:\\Proyectos\\Maipu\\Timm30\\Spike2753\\SP-2753Audit\\EvoltisTL.AuditDomain\\EvoltisTL.AuditDomain\\EvoltisTL.AuditDomain.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

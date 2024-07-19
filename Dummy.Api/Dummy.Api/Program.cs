@@ -5,6 +5,7 @@ using Dummy.Core.Repositories.IRepositories;
 using Dummy.Core.Services;
 using Dummy.Core.Services.IServices;
 using EvoltisTL.AuditDomain.Application.Auditing;
+using EvoltisTL.AuditDomain.Domain.AuditEntryModel;
 using EvoltisTL.AuditDomain.Infraestructure.Persistence;
 using EvoltisTL.AuditDomain.Infraestructure.Repositories;
 using EvoltisTL.AuditDomain.Infraestructure.Repositories.Interfaces;
@@ -29,13 +30,16 @@ var conn = builder.Configuration.GetConnectionString("DefaultConnection");
 var connAudit = builder.Configuration.GetConnectionString("DefaultAuditConnection");
 
 #region DbContext
-builder.Services.AddScoped<AuditSaveChangesInterceptor>();
+builder.Services.AddTransient<AuditSaveChangesInterceptor>();
+builder.Services.AddTransient<AuditTransactionInterceptor>();
+builder.Services.AddScoped<AuditEntryContainer>();
 
 builder.Services.AddDbContext<DomainContext>((serviceProvider, options) =>
 {
     options.UseMySql(conn, ServerVersion.AutoDetect(conn));
     var interceptor = serviceProvider.GetRequiredService<AuditSaveChangesInterceptor>();
-    options.AddInterceptors(interceptor);
+    var interceptorTransaction = serviceProvider.GetRequiredService<AuditTransactionInterceptor>();
+    options.AddInterceptors(interceptor, interceptorTransaction);
 });
 
 
@@ -53,6 +57,8 @@ builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();
 builder.Services.AddScoped<ICompanyService, CompanyService>();
 
+builder.Services.AddScoped<IProductCompanyRepository, ProductCompanyRepository>();
+builder.Services.AddScoped<IProductsCompanyService, ProductsCompanyService>();
 
 builder.Services.AddScoped<IAuditLogRepository, AuditLogRepository>();
 //builder.Services.AddScoped<IGetInstanceRepository, GetInstanceRepository>();
