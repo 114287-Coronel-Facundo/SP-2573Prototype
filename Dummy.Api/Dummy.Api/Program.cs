@@ -41,6 +41,11 @@ builder.Services
     })
     .AddInMemoryStorage();
 
+builder.Services.Configure<HealthCheckPublisherOptions>(options =>
+{
+    options.Period = TimeSpan.FromSeconds(2);
+});
+
 builder.Services.AddScoped<ServerHealthCheck>();
 #endregion
 
