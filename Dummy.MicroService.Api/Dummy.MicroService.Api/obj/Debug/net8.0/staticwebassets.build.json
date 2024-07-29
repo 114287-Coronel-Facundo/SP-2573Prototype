@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "WoktMKRupF7udGY+c9eX9JBy2iicce7ICBcfToJdLiw=",
+  "Source": "Dummy.MicroService.Api",
+  "BasePath": "_content/Dummy.MicroService.Api",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
