@@ -30,33 +30,7 @@ namespace Dummy.Audit.Core.Services
             var values = await _repository.GetAudit(tableName, primaryKey);
 
             var strategy = _factoryAuditService.GetStrategy(tableName);
-            await strategy.GetAuditData(values);
-             
-            return new List<AuditLogGetViewModel>();
-        }
-        private List<string> ExtractIdFields(string json)
-        {
-            var jObject = JObject.Parse(json);
-            var idFields = jObject.Properties()
-                .Where(p => p.Name.EndsWith("Id") && p.Value != null)
-                .Select(p => $"{p.Name},{p.Value}")
-                .ToList();
-
-            return idFields;
-        }
-
-        private (string Table,string FieldName,string IdFK) GetTableSecondary(string fieldAux, string id)
-        {
-            var dicc = new Dictionary<string, string[]>();
-            dicc.Add("PhoneCountryId", ["countries", "name"]);
-            dicc.Add("OrderTypeId", ["order_types", "name"]);
-
-            if (dicc.ContainsKey(fieldAux))
-            {
-                var table = dicc[fieldAux];
-                return (table[0], table[1], id);
-            }
-            return (string.Empty, string.Empty,string.Empty);
+            return await strategy.GetAuditData(values);
         }
     }
 }

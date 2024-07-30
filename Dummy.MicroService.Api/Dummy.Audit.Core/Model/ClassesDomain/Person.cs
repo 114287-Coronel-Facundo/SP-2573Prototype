@@ -49,6 +49,8 @@ public partial class Person
 
     public virtual MaritalStatus? MaritalStatus { get; set; }
 
+    public virtual Country OriginCountry { get; set; } = null!;
+
     public virtual SocietyType? SocietyType { get; set; }
 
     public virtual ICollection<User> Users { get; set; } = new List<User>();

@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Dummy.Audit.Core.Model
+namespace Dummy.Audit.Core.Utils.Enums
 {
-    public interface IEntity
+    public enum AuditType
     {
-        int Id { get; set; }
-        string Name { get; set; }
+        Create = 1, Update = 2, Delete = 3
     }
 }

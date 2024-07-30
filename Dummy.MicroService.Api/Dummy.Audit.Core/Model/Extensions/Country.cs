@@ -4,11 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Dummy.Audit.Core.Model
+namespace Dummy.Audit.Core.Model.ClassesDomain
 {
-    public interface IEntity
+    public partial class Country : IEntity
     {
-        int Id { get; set; }
-        string Name { get; set; }
     }
 }

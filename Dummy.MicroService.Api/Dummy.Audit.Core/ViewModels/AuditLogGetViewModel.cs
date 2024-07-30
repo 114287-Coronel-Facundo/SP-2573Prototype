@@ -10,9 +10,13 @@ namespace Dummy.Audit.Core.ViewModels
 {
     public class AuditLogGetViewModel
     {
+        public AuditLogGetViewModel()
+        {
+            Values = new List<ValuesViewModel>();
+        }
         public int Id { get; set; }
 
-        public int UserId { get; set; }
+        public UserViewModel User { get; set; }
 
         public string Type { get; set; } = null!;
 
@@ -20,9 +24,7 @@ namespace Dummy.Audit.Core.ViewModels
 
         public DateTime DateTime { get; set; }
 
-        public string? OldValues { get; set; }
-
-        public string? NewValues { get; set; }
+        public List<ValuesViewModel>? Values { get; set; }
 
         public string? AffectedColumns { get; set; }
 

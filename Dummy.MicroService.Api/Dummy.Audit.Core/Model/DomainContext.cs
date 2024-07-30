@@ -41,6 +41,8 @@ public partial class DomainContext : DbContext
 
     public virtual DbSet<CounterpartType> CounterpartTypes { get; set; }
 
+    public virtual DbSet<Country> Countries { get; set; }
+
     public virtual DbSet<Customer> Customers { get; set; }
 
     public virtual DbSet<DiaryType> DiaryTypes { get; set; }
@@ -65,9 +67,13 @@ public partial class DomainContext : DbContext
 
     public virtual DbSet<FuelType> FuelTypes { get; set; }
 
+    public virtual DbSet<InsuranceCompany> InsuranceCompanies { get; set; }
+
     public virtual DbSet<IvaConditionType> IvaConditionTypes { get; set; }
 
     public virtual DbSet<MaritalStatus> MaritalStatuses { get; set; }
+
+    public virtual DbSet<OrderColorCube> OrderColorCubes { get; set; }
 
     public virtual DbSet<OrderStateType> OrderStateTypes { get; set; }
 
@@ -264,6 +270,16 @@ public partial class DomainContext : DbContext
             entity.Property(e => e.Name).HasMaxLength(200);
         });
 
+        modelBuilder.Entity<Country>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PRIMARY");
+
+            entity.ToTable("countries");
+
+            entity.Property(e => e.InternationalPhoneCode).HasMaxLength(3);
+            entity.Property(e => e.Name).HasMaxLength(50);
+        });
+
         modelBuilder.Entity<Customer>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PRIMARY");
@@ -391,6 +407,16 @@ public partial class DomainContext : DbContext
             entity.Property(e => e.Name).HasMaxLength(20);
         });
 
+        modelBuilder.Entity<InsuranceCompany>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PRIMARY");
+
+            entity.ToTable("insurance_companies");
+
+            entity.Property(e => e.Enabled).HasDefaultValueSql("'1'");
+            entity.Property(e => e.Name).HasMaxLength(50);
+        });
+
         modelBuilder.Entity<IvaConditionType>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PRIMARY");
@@ -407,6 +433,15 @@ public partial class DomainContext : DbContext
             entity.ToTable("marital_statuses");
 
             entity.Property(e => e.Name).HasMaxLength(50);
+        });
+
+        modelBuilder.Entity<OrderColorCube>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PRIMARY");
+
+            entity.ToTable("order_color_cubes");
+
+            entity.Property(e => e.Name).HasMaxLength(200);
         });
 
         modelBuilder.Entity<OrderStateType>(entity =>
@@ -478,6 +513,10 @@ public partial class DomainContext : DbContext
             entity.HasOne(d => d.MaritalStatus).WithMany(p => p.People)
                 .HasForeignKey(d => d.MaritalStatusId)
                 .HasConstraintName("FK_People_marital_statuses_MaritalStatusId");
+
+            entity.HasOne(d => d.OriginCountry).WithMany(p => p.People)
+                .HasForeignKey(d => d.OriginCountryId)
+                .HasConstraintName("FK_People_Countries_OriginCountryId");
 
             entity.HasOne(d => d.SocietyType).WithMany(p => p.People)
                 .HasForeignKey(d => d.SocietyTypeId)
