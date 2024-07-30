@@ -48,7 +48,7 @@ namespace Dummy.Audit.Core.Services.Strategies
             return entity;
         }
 
-        public List<(string Field, string Id)> ExtractIdFields(IEnumerable<Auditlog> auditLogs)
+        public virtual List<(string Field, string Id)> ExtractIdFields(IEnumerable<Auditlog> auditLogs)
         {
             var TableFields = new List<(string Field, string Id)>();
 
@@ -79,16 +79,16 @@ namespace Dummy.Audit.Core.Services.Strategies
 
             return TableFields;
         }
-        public async Task<List<AuditLogGetViewModel>> MapAudit(IEnumerable<Auditlog> auditLog)
+        public virtual async Task<List<AuditLogGetViewModel>> MapAudit(IEnumerable<Auditlog> auditLog)
         {
             var auditLogGetViewModel = new List<AuditLogGetViewModel>();
 
             foreach (var item in auditLog)
-            {
+            {   //TODO VER SELECT
                 auditLogGetViewModel.Add(new AuditLogGetViewModel
                 {
                     Id = item.Id,
-                    User = FullNameUser.Where(p => p.Id == item.UserId).ToList().FirstOrDefault(),
+                    User = FullNameUser.Where(p => p.Id == item.UserId).ToList().FirstOrDefault(), //TODO PARA EMPRESA FANTASY NAME
                     Type = item.Type,
                     TableName = item.TableName,
                     DateTime = item.DateTime,
@@ -100,17 +100,16 @@ namespace Dummy.Audit.Core.Services.Strategies
             return auditLogGetViewModel;
         }
 
-        public ValuesViewModel AddValues<T>(List<Object> dataForeingKeys, Dictionary<string, JsonElement>? newValues, Dictionary<string, JsonElement>? oldValues, string fieldName, AuditType auditType) where T : class, IEntity
+        public virtual ValuesViewModel AddValues<T>(List<Object> dataForeingKeys, Dictionary<string, JsonElement>? newValues, Dictionary<string, JsonElement>? oldValues, string fieldName, AuditType auditType) where T : class, IEntity
         {
             var valuesViewModel = new ValuesViewModel();
             valuesViewModel.FieldName = FindTransalte(fieldName);
 
             if (newValues is not null)
             {
-                int idNew;
                 try
                 {
-                    var idNewValue = newValues[fieldName].TryGetInt32(out idNew);
+                    var idNewValue = newValues[fieldName].TryGetInt32(out int idNew);
                     valuesViewModel.NewValue = (auditType == AuditType.Create || auditType == AuditType.Update) ? dataForeingKeys.Where(p => p is T && (int)(p as T).Id == idNew)
                                                                 .Select(p => (p as T).Name).FirstOrDefault() : null;
                     valuesViewModel.OldValue = null;
@@ -124,10 +123,9 @@ namespace Dummy.Audit.Core.Services.Strategies
 
             if(oldValues is not null)
             {
-                int idOld;
                 try
                 {
-                    var idOldValue = oldValues[fieldName].TryGetInt32(out idOld);
+                    var idOldValue = oldValues[fieldName].TryGetInt32(out int idOld);
                     valuesViewModel.OldValue = auditType == AuditType.Delete || auditType == AuditType.Update ? dataForeingKeys.Where(p => p is T && (int)(p as T).Id == idOld)
                                             .Select(p => (p as T).Name).FirstOrDefault() : null;
                     valuesViewModel.NewValue = null;
@@ -141,19 +139,19 @@ namespace Dummy.Audit.Core.Services.Strategies
         }
 
 
-        public T ToEnum<T>(string value)
+        public virtual T ToEnum<T>(string value)
         {
             return (T)Enum.Parse(typeof(T), value, true);
         }
 
-        public async Task<bool> ValidateOperation(Dictionary<string, JsonElement>? newValues, Dictionary<string, JsonElement>? oldValues, string fieldName, AuditType auditType)
+        public virtual async Task<bool> ValidateOperation(Dictionary<string, JsonElement>? newValues, Dictionary<string, JsonElement>? oldValues, string fieldName, AuditType auditType)
         {
             bool validate = false;
 
             if(auditType == AuditType.Create)
             {
 
-                if (newValues != null && newValues.ContainsKey(fieldName) && newValues[fieldName].ToString() != "")
+                if (newValues != null && newValues.ContainsKey(fieldName))
                 {
                     if (newValues[fieldName].ToString() == "")
                     {
@@ -207,7 +205,7 @@ namespace Dummy.Audit.Core.Services.Strategies
             return validate;
         }
 
-        public string FindTransalte(string key)
+        public virtual string FindTransalte(string key)
         {
             return _valuesDictionary.FindTranslate(key);
         }

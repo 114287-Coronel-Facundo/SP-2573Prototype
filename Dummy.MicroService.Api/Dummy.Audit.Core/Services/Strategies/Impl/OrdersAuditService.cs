@@ -26,16 +26,16 @@ namespace Dummy.Audit.Core.Services.Strategies.Impl
             _context = domainContext;
             _mapper = mapper;
         }
-
+        // productbagdetials workshop
         public async Task<IEnumerable<AuditLogGetViewModel>> GetAuditData(IEnumerable<Auditlog> auditLog)
         {
             List<int> usersId = auditLog.Select(p => p.UserId).Distinct().ToList();
             GetUserFullName(usersId);
-            var resultForeingKey = ExtractIdFields(auditLog);
+            var resultForeingKey = ExtractIdFields(auditLog); // ver yield return y dictionary
             var dataForeingKeys = new List<Object>();
-            await GetDataForeingKey(dataForeingKeys, resultForeingKey);
+            await GetDataForeingKey(dataForeingKeys, resultForeingKey); // ver yield return
             var map = await MapAudit(auditLog);
-            await BuildResult(map, auditLog, dataForeingKeys);    
+            await BuildResult(map, auditLog, dataForeingKeys);
 
             return map;
         }
@@ -69,6 +69,7 @@ namespace Dummy.Audit.Core.Services.Strategies.Impl
                     auditViewModel.Values.Add(AddValues<Country>(dataForeingKeys, newValues, oldValues, "PhoneCountryId", auditEnumType));
                 }
 
+                //Refactorizar...
                 if(auditEnumType == AuditType.Update)
                 {
                     oldValues.Remove("OrderTypeId");
@@ -123,7 +124,6 @@ namespace Dummy.Audit.Core.Services.Strategies.Impl
                         });
                     }
                 }
-
             }
         }
 
