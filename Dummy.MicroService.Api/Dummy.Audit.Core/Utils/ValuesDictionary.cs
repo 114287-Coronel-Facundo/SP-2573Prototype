@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Dummy.Audit.Core.Utils
 {
-    public record struct ValuesDictionary
+    public struct ValuesDictionary
     {
         private Dictionary<string, string> _dictionary;
         public ValuesDictionary()

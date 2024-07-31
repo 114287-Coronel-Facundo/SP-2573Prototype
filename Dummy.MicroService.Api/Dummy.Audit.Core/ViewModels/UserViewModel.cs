@@ -13,10 +13,11 @@ namespace Dummy.Audit.Core.ViewModels
         {
             
         }
-        public int Id { get; set; }
-        public string Name { get; set; }
+        public int Id { get; set; } //TODO ESTO NO SALE
+        public string Name { get; set; } 
         public string Surname { get; set; }
-        public int LegalStatusId { get; set; }
+        public int LegalStatusId { get; set; } //TODO ESTO NO SALE
         public string BusinessName { get; set; }
+        public string FullName => Name + " " + Surname;
     }
 }

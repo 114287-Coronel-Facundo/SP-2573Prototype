@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace Dummy.Audit.Core.Services.Strategies.Impl
 {
-    public class OrdersAuditService : BaseTemplate,IOrdersAuditService
+    public class OrdersAuditService : BaseTemplate, IOrdersAuditService
     {
         private readonly DomainContext _context;
         private readonly IMapper _mapper;

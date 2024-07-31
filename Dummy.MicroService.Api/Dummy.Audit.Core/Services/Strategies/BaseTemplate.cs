@@ -21,14 +21,14 @@ namespace Dummy.Audit.Core.Services.Strategies
             _valuesDictionary = new ValuesDictionary();
         }
 
-        public List<UserViewModel> FullNameUser { get; set; }
+        public List<UserViewModel> UserViewModel { get; set; }
 
 
         public void GetUserFullName(List<int> userIds)
         {
             var query = _domainContext.Users.AsQueryable().Include(p => p.Person);
             
-            FullNameUser = query.Where(p => userIds.Contains(p.Id)).Select(p => new UserViewModel
+            UserViewModel = query.Where(p => userIds.Contains(p.Id)).Select(p => new UserViewModel
             {
                 Id = p.Id,
                 Name = p.Person.Name,
@@ -39,7 +39,7 @@ namespace Dummy.Audit.Core.Services.Strategies
         }
 
 
-        public async Task<T> GetDataForeingKey<T>(List<int> id) where T : class, IEntity
+        public virtual async Task<T> GetDataForeingKey<T>(List<int> id) where T : class, IEntity
         {
             var entity = await _domainContext.Set<T>()
                 .AsQueryable()
@@ -88,7 +88,7 @@ namespace Dummy.Audit.Core.Services.Strategies
                 auditLogGetViewModel.Add(new AuditLogGetViewModel
                 {
                     Id = item.Id,
-                    User = FullNameUser.Where(p => p.Id == item.UserId).ToList().FirstOrDefault(), //TODO PARA EMPRESA FANTASY NAME
+                    User = UserViewModel.Where(p => p.Id == item.UserId).ToList().FirstOrDefault(), //TODO PARA EMPRESA FANTASY NAME
                     Type = item.Type,
                     TableName = item.TableName,
                     DateTime = item.DateTime,

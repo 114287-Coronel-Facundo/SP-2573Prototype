@@ -17,9 +17,9 @@ namespace Dummy.MicroService.Api.Controllers
 
 
         [HttpGet]
-        public async Task<IActionResult> Get(string tableName, int primaryKey)
+        public async Task<IActionResult> Get(string command, int primaryKey)
         {
-            return Ok( await _auditLogService.GetAudit(tableName, primaryKey));
+            return Ok( await _auditLogService.GetAudit(command, primaryKey));
         }
     }
 }

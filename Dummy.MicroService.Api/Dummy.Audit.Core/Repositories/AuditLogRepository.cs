@@ -39,8 +39,6 @@ namespace Dummy.Audit.Core.Repositories
                     new MySqlParameter("@primaryKey", primaryKey))
                         .ToListAsync();
 
-
-
             return result;
         }
     }

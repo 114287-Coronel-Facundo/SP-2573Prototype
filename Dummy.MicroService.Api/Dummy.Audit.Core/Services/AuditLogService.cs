@@ -25,11 +25,13 @@ namespace Dummy.Audit.Core.Services
             _factoryAuditService = factoryAuditService;
         }
 
-        public async Task<IEnumerable<AuditLogGetViewModel>> GetAudit(string tableName, int primaryKey)
+        public async Task<IEnumerable<AuditLogGetViewModel>> GetAudit(string command, int primaryKey)
         {
-            var values = await _repository.GetAudit(tableName, primaryKey);
-
-            var strategy = _factoryAuditService.GetStrategy(tableName);
+            //TODO: DEVOLVER UN VIEWMODEL
+            var values = await _repository.GetAudit(command, primaryKey);
+            //TODO: TRAER HIJOS CON RESPONSABILIDAD UNICA.
+            //TODO: TRAER USUARIOS ACA.
+            var strategy = _factoryAuditService.GetStrategy(command);
             return await strategy.GetAuditData(values);
         }
     }

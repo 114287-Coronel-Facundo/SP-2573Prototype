@@ -6,5 +6,6 @@ namespace Dummy.Audit.Core.Services.IFactoryService.Interfaces
     public interface IAuditService
     {
         Task<IEnumerable<AuditLogGetViewModel>> GetAuditData(IEnumerable<Auditlog> auditLog);
+
     }
 }

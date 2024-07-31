@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Dummy.Audit.Core")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7fca8eae91d7401a68484957b97d7e255dd81adb")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e7d57d6d82d255d538f503aa582ae131ad7ae9bc")]
 [assembly: System.Reflection.AssemblyProductAttribute("Dummy.Audit.Core")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Dummy.Audit.Core")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
