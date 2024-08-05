@@ -1,7 +1,6 @@
 using Dummy.Audit.Core;
 using Dummy.Audit.Core.Models;
 using Dummy.Audit.Core.Repositories.Interfaces;
-using Dummy.Audit.Core.Repositories;
 using Dummy.Audit.Core.Services.Interfaces;
 using Dummy.Audit.Core.Services;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +11,7 @@ using Dummy.Audit.Core.Services.Strategies.Interfaces;
 using Dummy.Audit.Core.Services.Strategies.Impl;
 using Dummy.Audit.Core.Services.IFactoryService.Interfaces;
 using Dummy.Audit.Core.Services.IFactoryService.Impl;
+using Dummy.Audit.Core.Repositories.Impl;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -40,9 +40,11 @@ builder.Services.AddAutoMapper(typeof(AuditLogMapper));
 
 builder.Services.AddScoped<IAuditLogRepository, AuditLogRepository>();
 builder.Services.AddScoped<IAuditLogService, AuditLogService>();
-builder.Services.AddScoped<IDescriptionRepository, DescriptionRepository>();
+builder.Services.AddScoped<IFirstOrdersRepository, FirstOrdersRepository>();
 builder.Services.AddScoped<IFactoryAuditService, FactoryAuditService>();
 builder.Services.AddScoped<IOrdersAuditService, OrdersAuditService>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+
 
 var app = builder.Build();
 

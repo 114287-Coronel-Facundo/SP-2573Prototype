@@ -15,10 +15,10 @@ namespace Dummy.Audit.Core.Services
     public class AuditLogService : IAuditLogService
     {
         private readonly IAuditLogRepository _repository;
-        private readonly IDescriptionRepository _descriptionRepository;
+        private readonly IFirstOrdersRepository _descriptionRepository;
         private readonly IFactoryAuditService _factoryAuditService;
 
-        public AuditLogService(IAuditLogRepository repository, IDescriptionRepository descriptionRepository, IFactoryAuditService factoryAuditService)
+        public AuditLogService(IAuditLogRepository repository, IFirstOrdersRepository descriptionRepository, IFactoryAuditService factoryAuditService)
         {
             _repository = repository;
             _descriptionRepository = descriptionRepository;
@@ -27,10 +27,7 @@ namespace Dummy.Audit.Core.Services
 
         public async Task<IEnumerable<AuditLogGetViewModel>> GetAudit(string command, int primaryKey)
         {
-            //TODO: DEVOLVER UN VIEWMODEL
             var values = await _repository.GetAudit(command, primaryKey);
-            //TODO: TRAER HIJOS CON RESPONSABILIDAD UNICA.
-            //TODO: TRAER USUARIOS ACA.
             var strategy = _factoryAuditService.GetStrategy(command);
             return await strategy.GetAuditData(values);
         }

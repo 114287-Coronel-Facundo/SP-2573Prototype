@@ -1,5 +1,5 @@
 ﻿using Dummy.Audit.Core.Models;
-using Dummy.Audit.Core.Repositories;
+using Dummy.Audit.Core.Repositories.Impl;
 using Dummy.Audit.Core.Repositories.Interfaces;
 using Dummy.Audit.Core.Services;
 using Dummy.Audit.Core.Services.Interfaces;
