@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Dummy.MicroService.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4ae81d9d9ea8d7c753d3a897027c226b758a4c4f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f6b3f5a449c3771439b47866e86d69a758cb4016")]
 [assembly: System.Reflection.AssemblyProductAttribute("Dummy.MicroService.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Dummy.MicroService.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

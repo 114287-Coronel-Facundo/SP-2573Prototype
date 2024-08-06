@@ -15,10 +15,10 @@ namespace Dummy.Audit.Core.Services
     public class AuditLogService : IAuditLogService
     {
         private readonly IAuditLogRepository _repository;
-        private readonly IFirstOrdersRepository _descriptionRepository;
+        private readonly IFirstOrdersRepository1 _descriptionRepository;
         private readonly IFactoryAuditService _factoryAuditService;
 
-        public AuditLogService(IAuditLogRepository repository, IFirstOrdersRepository descriptionRepository, IFactoryAuditService factoryAuditService)
+        public AuditLogService(IAuditLogRepository repository, IFirstOrdersRepository1 descriptionRepository, IFactoryAuditService factoryAuditService)
         {
             _repository = repository;
             _descriptionRepository = descriptionRepository;

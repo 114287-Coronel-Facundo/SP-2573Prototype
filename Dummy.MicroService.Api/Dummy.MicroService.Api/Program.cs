@@ -40,10 +40,13 @@ builder.Services.AddAutoMapper(typeof(AuditLogMapper));
 
 builder.Services.AddScoped<IAuditLogRepository, AuditLogRepository>();
 builder.Services.AddScoped<IAuditLogService, AuditLogService>();
-builder.Services.AddScoped<IFirstOrdersRepository, FirstOrdersRepository>();
+builder.Services.AddScoped<IFirstOrdersRepository1, FirstOrdersRepository>();
 builder.Services.AddScoped<IFactoryAuditService, FactoryAuditService>();
 builder.Services.AddScoped<IOrdersAuditService, OrdersAuditService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IFirstOrderRepositoriesFactory, FirstOrderRepositoriesFactory>();
+builder.Services.AddScoped<IOrderTypesRepository, OrderTypesRepository>();
+builder.Services.AddScoped<IOrderColorCubesRepository, OrderColorCubesRepository>();
 
 
 var app = builder.Build();

@@ -2,6 +2,7 @@
 using Dummy.Audit.Core.Model;
 using Dummy.Audit.Core.Models;
 using Dummy.Audit.Core.Repositories.Interfaces;
+using Dummy.Audit.Core.Services.IFactoryService.Interfaces;
 using Dummy.Audit.Core.Utils;
 using Dummy.Audit.Core.Utils.Enums;
 using Dummy.Audit.Core.ViewModels;
@@ -16,13 +17,15 @@ namespace Dummy.Audit.Core.Services.Strategies
     {
         private readonly ValuesDictionary _valuesDictionary;
         private readonly IUserRepository _userRepository;
-        private readonly IFirstOrdersRepository _descriptionRepository;
+        private readonly IFirstOrdersRepository1 _descriptionRepository;
+        private readonly IFirstOrderRepositoriesFactory _firstOrderRepositoriesFactory;
 
-        public BaseTemplate(IUserRepository userRepository, IFirstOrdersRepository descriptionRepository)
+        public BaseTemplate(IUserRepository userRepository, IFirstOrdersRepository1 descriptionRepository, IFirstOrderRepositoriesFactory firstOrderRepositoriesFactory)
         {
             _valuesDictionary = new ValuesDictionary();
             _userRepository = userRepository;
             _descriptionRepository = descriptionRepository;
+            _firstOrderRepositoriesFactory = firstOrderRepositoriesFactory;
         }
 
         public List<UserViewModel> UserViewModel { get; set; }
@@ -39,18 +42,53 @@ namespace Dummy.Audit.Core.Services.Strategies
 
         public async Task SetFirstOrderRelationshipData(List<FirstOrderRelationship> configuration, List<AuditLogGetViewModel> auditLogGetViewModels)
         {
-            //await Parallel.ForEachAsync(configuration, async (propertyConfiguration, cancelationToken) =>
-            //{
-            //    await ExtractIdFields(auditLogGetViewModels, propertyConfiguration);
-            //});
-
-            foreach(var entity in configuration)
+            await Parallel.ForEachAsync(configuration, async (propertyConfiguration, cancelationToken) =>
             {
-                await ExtractIdFields(auditLogGetViewModels, entity);
+                await ExtractIdFields(auditLogGetViewModels, propertyConfiguration);
+                //TODO METER EN METODO
+                var strategy = _firstOrderRepositoriesFactory.GetStrategy(propertyConfiguration);
+                var values = (await strategy.GetByIds<ValuableViewModel>(propertyConfiguration.GetKeysFirstOrderData())).ToList();
+                foreach (var item in values)
+                {
+                    propertyConfiguration.SetValueFirstOrderData(item);
+                }
+
+                await HumanizedValues(auditLogGetViewModels, propertyConfiguration);
+            });
+
+            //foreach (var entity in configuration)
+            //{
+            //    await ExtractIdFields(auditLogGetViewModels, entity);
+            //}
+        }
+
+        private async Task HumanizedValues(List<AuditLogGetViewModel> auditLogGetViewModels, FirstOrderRelationship firstOrderRelationship)
+        {
+            var ids = firstOrderRelationship.GetAuditLogIds();
+            var entities = auditLogGetViewModels.Where(p => ids.Contains(p.Id));
+            foreach (var item in entities)
+            {
+                ReplaceJsonProperties(item.NewValues, firstOrderRelationship);
+                ReplaceJsonProperties(item.OldValues, firstOrderRelationship);
             }
         }
 
-        public async Task BuildResult(List<AuditLogGetViewModel> auditLogs, List<FirstOrderRelationship> firstOrders, List<UserViewModel> userViewModels)
+        private void ReplaceJsonProperties(JObject? jValues, FirstOrderRelationship firstOrderRelationship)
+        {
+            if (jValues == null)
+            {
+                return;
+            }
+            var property = jValues.Property(firstOrderRelationship.PropertyName);
+            if (property == null || string.IsNullOrEmpty(property.Value.ToString())) //TODO : Validar el value que sea int
+            {
+                return;
+            }
+            var newValue = firstOrderRelationship.GetKeyValue((int)property.Value);
+            property.Replace(new JProperty(firstOrderRelationship.PropertyName, string.Join(", ", newValue)));
+        }
+
+        public async Task BuildResult(List<AuditLogGetViewModel> auditLogs, /*List<FirstOrderRelationship> firstOrders,*/ List<UserViewModel> userViewModels)
         {
             await Parallel.ForEachAsync(auditLogs, async (auditLog, CancellationToken) =>
             {
@@ -59,17 +97,17 @@ namespace Dummy.Audit.Core.Services.Strategies
                 switch (action)
                 {
                     case AuditType.Update:
-                        ContainPrimaryKey(auditLog.NewValues, auditLog.Id, firstOrders);
-                        ContainPrimaryKey(auditLog.OldValues, auditLog.Id, firstOrders);
+                        //ContainPrimaryKey(auditLog.NewValues, auditLog.Id, firstOrders);
+                        //ContainPrimaryKey(auditLog.OldValues, auditLog.Id, firstOrders);
                         JValuesAction(auditLog.NewValues, auditLog);
                         JValuesAction(auditLog.OldValues, auditLog);
                         break;
                     case AuditType.Create:
-                        ContainPrimaryKey(auditLog.NewValues, auditLog.Id, firstOrders);
+                        //ContainPrimaryKey(auditLog.NewValues, auditLog.Id, firstOrders);
                         JValuesAction(auditLog.NewValues, auditLog);
                         break;
                     case AuditType.Delete:
-                        ContainPrimaryKey(auditLog.NewValues, auditLog.Id, firstOrders);
+                        //ContainPrimaryKey(auditLog.NewValues, auditLog.Id, firstOrders);
                         JValuesAction(auditLog.OldValues, auditLog);
                         break;
                 }
@@ -103,16 +141,15 @@ namespace Dummy.Audit.Core.Services.Strategies
             //        }
             //    }
             //});
-            foreach(var entity in firstOrders)
+            foreach (var entity in firstOrders)
             {
                 if (entity.ContainsSpecificId(auditLogId))
                 {
                     var property = jValue.Property(entity.PropertyName);
-                    var asd = property.Value.ToString();
-                    if (!string.IsNullOrEmpty(property.Value.ToString()) && property != null)
+                    if (property != null && !string.IsNullOrEmpty(property.Value.ToString()))
                     {
                         var newValue = entity.GetKeyValue((int)property.Value);
-                        property.Replace(new JProperty(entity.PropertyName, newValue));
+                        property.Replace(new JProperty(entity.PropertyName, string.Join(", ", newValue)));
                     }
                 }
             }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Dummy.Audit.Core.Repositories.Interfaces
 {
-    public interface IFirstOrdersRepository
+    public interface IFirstOrdersRepository1
     {
         Task GetDataFirstOrders(List<FirstOrderRelationship> firstOrders);
     }

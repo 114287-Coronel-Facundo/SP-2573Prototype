@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Dummy.Audit.Core.Model.ClassesDomain;
 using Dummy.Audit.Core.Models;
 using Dummy.Audit.Core.ViewModels;
 using System;
@@ -14,6 +15,10 @@ namespace Dummy.Audit.Core.MapperConfig
         public AuditLogMapper()
         {
             CreateMap<Auditlog, AuditLogGetViewModel>();
+            CreateMap<OrderType, ValuableViewModel>()
+                .ForMember(dest => dest.Value, orig => orig.MapFrom(ent => ent.Name));
+            CreateMap<OrderColorCube, ValuableViewModel>()
+                        .ForMember(dest => dest.Value, orig => orig.MapFrom(ent => ent.Name));
         }
     }
 }

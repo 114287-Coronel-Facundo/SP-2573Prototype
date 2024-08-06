@@ -3,12 +3,14 @@ using Dummy.Audit.Core.Model;
 using Dummy.Audit.Core.Model.ClassesDomain;
 using Dummy.Audit.Core.Models;
 using Dummy.Audit.Core.Repositories.Interfaces;
+using Dummy.Audit.Core.Services.IFactoryService.Interfaces;
 using Dummy.Audit.Core.Services.Strategies.Interfaces;
 using Dummy.Audit.Core.Utils.Enums;
 using Dummy.Audit.Core.ViewModels;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
@@ -21,7 +23,7 @@ namespace Dummy.Audit.Core.Services.Strategies.Impl
     {
         private readonly IMapper _mapper;
 
-        public OrdersAuditService(IUserRepository userRepository, IFirstOrdersRepository descriptionRepository) : base(userRepository, descriptionRepository)
+        public OrdersAuditService(IUserRepository userRepository, IFirstOrdersRepository1 descriptionRepository, IFirstOrderRepositoriesFactory firstOrderRepositoriesFactory) : base(userRepository, descriptionRepository, firstOrderRepositoriesFactory)
         {
         }
 
@@ -32,8 +34,8 @@ namespace Dummy.Audit.Core.Services.Strategies.Impl
             await GetUserFullName(usersId);
             var firstOrder = GetFirstOrderRelationshipsConfiguration();
             await SetFirstOrderRelationshipData(firstOrder, auditLog.ToList());
-            await GetDataForeingKey(firstOrder);
-            await BuildResult(auditLog.ToList(), firstOrder, UserViewModel);
+            //await GetDataForeingKey(firstOrder);
+            await BuildResult(auditLog.ToList()/*, firstOrder*/, UserViewModel);
             return auditLog;
         }
 
@@ -41,14 +43,16 @@ namespace Dummy.Audit.Core.Services.Strategies.Impl
         {
 
             return new List<FirstOrderRelationship>
-            {                               //Propiedad a buscar // Tabla      // columna         //Id
-                new FirstOrderRelationship("ProductBagId", "product_bag_details", "Products.Name", "Products.Id",new List<string[]> {
-                    new string[] {"Products", "Products.Id", "product_bag_details.ProductId" } //FROM + JOIN
-                }, "Product_bag_details.ProductBagId"),
-                new FirstOrderRelationship("InsuranceCompanyId", "insurance_companies", "Name", "Id"),
+            {
+                //new FirstOrderRelationship("ProductBagId", "orders", "concat(products.Name, space(1), products.Code)", "Products.Id",
+                //    new List<string[]> { new string[] { "product_bags", "orders.ProductBagId", "product_bags.Id" },
+                //                         new string[] { "product_bag_details", "product_bag_details.ProductBagId", "product_bags.Id" },
+                //                         new string[] { "products", "product_bag_details.ProductId", "products.Id" }},
+                //                        "Product_bag_details.ProductBagId"),
+                //new FirstOrderRelationship("InsuranceCompanyId", "insurance_companies", "Name", "Id"),
                 new FirstOrderRelationship("OrderTypeId", "order_types", "Name", "Id"),
                 new FirstOrderRelationship("OrderColorCubeId", "order_color_cubes", "Name", "Id"),
-                new FirstOrderRelationship("PhoneCountryId", "countries", "InternationalPhoneCode", "Id"),
+                //new FirstOrderRelationship("PhoneCountryId", "countries", "InternationalPhoneCode", "Id"),
             };
         }
 

@@ -12,7 +12,7 @@ namespace Dummy.Audit.Core.ViewModels
         {
             this.PropertyName = propertyName;
             this.AuditLogIds = new List<int>();
-            this.FirstOrderData = new Dictionary<int, string>();
+            this.FirstOrderData = new Dictionary<int, List<string>?>();
             this.TableName = tableName;
             this.FindColumnName = findColumnName;
             this.Joins = joins;
@@ -26,7 +26,12 @@ namespace Dummy.Audit.Core.ViewModels
         public string? IdWhere { get; set; }
         public List<string[]>? Joins { get; set; }
         private List<int> AuditLogIds { get; set; }
-        private Dictionary<int, string> FirstOrderData { get; set; }
+        private Dictionary<int, List<string>?> FirstOrderData { get; set; }
+
+        public void SetValueFirstOrderData(ValuableViewModel valuableViewModel)
+        {
+            this.FirstOrderData[valuableViewModel.Id] = new List<string> { valuableViewModel.Value };
+        }
 
         public void AddAuditLogId(int auditLogId)
         {
@@ -38,7 +43,7 @@ namespace Dummy.Audit.Core.ViewModels
             return this.AuditLogIds.Contains(auditLogId);
         }
 
-        public void AddFirstOrderData(int auditLogId, string data = null)
+        public void AddFirstOrderData(int auditLogId, List<string> data = null)
         {
             if(data == null)
                 this.FirstOrderData.Add(auditLogId, data);
@@ -60,10 +65,16 @@ namespace Dummy.Audit.Core.ViewModels
             return this.FirstOrderData.ContainsKey(key);
         }
 
-        public string GetKeyValue(int key)
+        public List<string>? GetKeyValue(int key)
         {
             return this.FirstOrderData[key];
         }
+
+    }
+
+    public class Query
+    {
+        private string TableName { get; set; }
 
     }
 }

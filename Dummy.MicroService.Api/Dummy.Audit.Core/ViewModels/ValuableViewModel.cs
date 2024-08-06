@@ -9,6 +9,6 @@ namespace Dummy.Audit.Core.ViewModels
     public class ValuableViewModel
     {
         public int Id { get; set; }
-        public string Value { get; set; }
+        public virtual string Value { get; set; }
     }
 }

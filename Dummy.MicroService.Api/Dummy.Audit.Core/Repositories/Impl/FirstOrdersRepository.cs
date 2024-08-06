@@ -12,7 +12,7 @@ using System.Text.Json;
 
 namespace Dummy.Audit.Core.Repositories.Impl
 {
-    public class FirstOrdersRepository : IFirstOrdersRepository
+    public class FirstOrdersRepository : IFirstOrdersRepository1
     {
         DomainContext _domainContext;
         private string _select = "";
@@ -21,6 +21,7 @@ namespace Dummy.Audit.Core.Repositories.Impl
         private List<string> _conditions = new List<string>();
         private string _from = "";
         private string _id = "ID";
+        private bool _hasJoin = false;
 
         public FirstOrdersRepository(DomainContext domainContext)
         {
@@ -44,34 +45,20 @@ namespace Dummy.Audit.Core.Repositories.Impl
                         LeftJoin(join);
                     }
                 }
-                //_idsToSearch = string.Join(", ", fo.GetKeysFirstOrderData());
+
                 WhereIn(fo.IdWhere == null ? fo.FindIdName : fo.IdWhere, idsWhere);
                 var query = ToString();
-
                 var entities = _domainContext.Database.SqlQueryRaw<ValuableViewModel>(query);
-                foreach (var entity in entities)
+                if (_hasJoin)
+                    fo.AddFirstOrderData(idsWhere[0], entities.Select(p => p.Value).ToList());
+                else
                 {
-                    fo.AddFirstOrderData(entity.Id, entity.Value);
+                    foreach (var entity in entities)
+                    {
+                        fo.AddFirstOrderData(entity.Id, new List<string> { entity.Value });
+                    }
                 }
                 Cleared();
-
-                //using (var connection = new MySqlConnection(_domainContext.Database.GetDbConnection().ConnectionString))
-                //{
-                //    await connection.OpenAsync();
-                //    using (var command = connection.CreateCommand())
-                //    {
-                //        command.CommandText = query;
-                //        using (var reader = await command.ExecuteReaderAsync())
-                //        {
-                //            while (await reader.ReadAsync())
-                //            {
-                //                var id = reader.GetInt32(0);
-                //                var data = reader.GetString(1);
-                //                fo.AddFirstOrderData(id, data);
-                //            }
-                //        }
-                //    }
-                //}
             }
         }
 
@@ -89,6 +76,7 @@ namespace Dummy.Audit.Core.Repositories.Impl
         private void LeftJoin(string[] join)
         {
              _joins.Add($"LEFT JOIN {join[0]} ON {join[1]} = {join[2]}");
+            _hasJoin = true;
         }
 
         private void WhereIn(string column, int[] values)
@@ -109,6 +97,7 @@ namespace Dummy.Audit.Core.Repositories.Impl
             _select = string.Empty;
             _joins.Clear();
             _from = string.Empty;
+            _hasJoin= false;
         }
     }
 }
