@@ -1,0 +1,15 @@
+C:\Proyectos\Maipu\Timm30\Spike2753\SP-2573Prototype\MicroService.Api\Dummy.Audit.Core\obj\Debug\net8.0\Audit.Core.csproj.AssemblyReference.cache
+C:\Proyectos\Maipu\Timm30\Spike2753\SP-2573Prototype\MicroService.Api\Dummy.Audit.Core\obj\Debug\net8.0\Audit.Core.Resources.PropertiesNames.resources
+C:\Proyectos\Maipu\Timm30\Spike2753\SP-2573Prototype\MicroService.Api\Dummy.Audit.Core\obj\Debug\net8.0\Audit.Core.csproj.GenerateResource.cache
+C:\Proyectos\Maipu\Timm30\Spike2753\SP-2573Prototype\MicroService.Api\Dummy.Audit.Core\obj\Debug\net8.0\Audit.Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\Proyectos\Maipu\Timm30\Spike2753\SP-2573Prototype\MicroService.Api\Dummy.Audit.Core\obj\Debug\net8.0\Audit.Core.AssemblyInfoInputs.cache
+C:\Proyectos\Maipu\Timm30\Spike2753\SP-2573Prototype\MicroService.Api\Dummy.Audit.Core\obj\Debug\net8.0\Audit.Core.AssemblyInfo.cs
+C:\Proyectos\Maipu\Timm30\Spike2753\SP-2573Prototype\MicroService.Api\Dummy.Audit.Core\obj\Debug\net8.0\Audit.Core.csproj.CoreCompileInputs.cache
+C:\Proyectos\Maipu\Timm30\Spike2753\SP-2573Prototype\MicroService.Api\Dummy.Audit.Core\obj\Debug\net8.0\Audit.Core.sourcelink.json
+C:\Proyectos\Maipu\Timm30\Spike2753\SP-2573Prototype\MicroService.Api\Dummy.Audit.Core\bin\Debug\net8.0\Audit.Core.deps.json
+C:\Proyectos\Maipu\Timm30\Spike2753\SP-2573Prototype\MicroService.Api\Dummy.Audit.Core\bin\Debug\net8.0\Audit.Core.dll
+C:\Proyectos\Maipu\Timm30\Spike2753\SP-2573Prototype\MicroService.Api\Dummy.Audit.Core\bin\Debug\net8.0\Audit.Core.pdb
+C:\Proyectos\Maipu\Timm30\Spike2753\SP-2573Prototype\MicroService.Api\Dummy.Audit.Core\obj\Debug\net8.0\Audit.Core.dll
+C:\Proyectos\Maipu\Timm30\Spike2753\SP-2573Prototype\MicroService.Api\Dummy.Audit.Core\obj\Debug\net8.0\refint\Audit.Core.dll
+C:\Proyectos\Maipu\Timm30\Spike2753\SP-2573Prototype\MicroService.Api\Dummy.Audit.Core\obj\Debug\net8.0\Audit.Core.pdb
+C:\Proyectos\Maipu\Timm30\Spike2753\SP-2573Prototype\MicroService.Api\Dummy.Audit.Core\obj\Debug\net8.0\ref\Audit.Core.dll
