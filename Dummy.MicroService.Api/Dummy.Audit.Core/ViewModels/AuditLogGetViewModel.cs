@@ -15,14 +15,13 @@ namespace Dummy.Audit.Core.ViewModels
         {
             Values = new List<ValuesViewModel>();
         }
-        internal int Id { get; set; }
+        public int Id { get; set; }
         public UserViewModel User { get; set; }
 
         internal int UserId { get; set; }
 
         public string Action { get; set; } = null!;
 
-        //TODO PASARLO A INTERNAL.
         internal string TableName { get; set; } = null!;
 
         public DateTime DateTime { get; set; }
@@ -32,11 +31,5 @@ namespace Dummy.Audit.Core.ViewModels
         internal JObject? OldValues { get; set; }
 
         internal JObject? NewValues { get; set; }
-
-
-        //TODO: VALIDAR SI SE USA PARA ALGO O HACERLO PRIVADO.
-        //public string? AffectedColumns { get; set; }
-        //TODO: VALIDAR SI SE USA PARA ALGO O HACERLO PRIVADO. 
-        //internal string PrimaryKey { get; set; } = null!;
     }
 }

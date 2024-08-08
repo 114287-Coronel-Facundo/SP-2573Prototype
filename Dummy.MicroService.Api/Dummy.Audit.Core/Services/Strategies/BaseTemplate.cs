@@ -2,67 +2,117 @@
 using Dummy.Audit.Core.Model;
 using Dummy.Audit.Core.Models;
 using Dummy.Audit.Core.Repositories.Interfaces;
+using Dummy.Audit.Core.Resources;
 using Dummy.Audit.Core.Services.IFactoryService.Interfaces;
 using Dummy.Audit.Core.Utils;
 using Dummy.Audit.Core.Utils.Enums;
 using Dummy.Audit.Core.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json.Linq;
+using System.Security.AccessControl;
 using System.Text.Json;
 
 namespace Dummy.Audit.Core.Services.Strategies
 {
     public abstract class BaseTemplate
     {
-        private readonly ValuesDictionary _valuesDictionary;
         private readonly IUserRepository _userRepository;
-        private readonly IFirstOrdersRepository1 _descriptionRepository;
         private readonly IFirstOrderRepositoriesFactory _firstOrderRepositoriesFactory;
 
-        public BaseTemplate(IUserRepository userRepository, IFirstOrdersRepository1 descriptionRepository, IFirstOrderRepositoriesFactory firstOrderRepositoriesFactory)
+        public BaseTemplate(IUserRepository userRepository, IFirstOrderRepositoriesFactory firstOrderRepositoriesFactory)
         {
-            _valuesDictionary = new ValuesDictionary();
             _userRepository = userRepository;
-            _descriptionRepository = descriptionRepository;
             _firstOrderRepositoriesFactory = firstOrderRepositoriesFactory;
         }
 
         public List<UserViewModel> UserViewModel { get; set; }
 
-        public async Task GetDataForeingKey(List<FirstOrderRelationship> firstOrders)
-        {
-            await _descriptionRepository.GetDataFirstOrders(firstOrders);
-        }
         public async Task GetUserFullName(List<int> userIds)
         {
             UserViewModel = await _userRepository.GetUsers(userIds);
         }
 
+        public async Task RemovePropertyWithMutedPropertyConfiguration(List<MutedPropertyConfiguration> mutedPropertyConfigurations, List<AuditLogGetViewModel> auditLog)
+        {
+            foreach(var propertyConfiguration in mutedPropertyConfigurations)
+            {
+                var propertyNameToRemove = propertyConfiguration.MutedPropertyName;
+                await RemovePropertyByName(propertyConfiguration.MutedPropertyName, auditLog.Where(p => (p.NewValues != null && p.NewValues.ContainsKey(propertyNameToRemove))
+                                                    || (p.OldValues != null && p.OldValues.ContainsKey(propertyNameToRemove))).ToList());
+            }
+        }
 
-        public async Task SetFirstOrderRelationshipData(List<FirstOrderRelationship> configuration, List<AuditLogGetViewModel> auditLogGetViewModels)
+        private async Task RemovePropertyByName(string propertyNameToRemove, List<AuditLogGetViewModel> auditLogs)
+        {
+            foreach (var log in auditLogs)
+            {
+                if(log.OldValues is not null)
+                    log.OldValues.Property(propertyNameToRemove).Remove();
+
+                if(log.NewValues is not null)
+                    log.NewValues.Property(propertyNameToRemove).Remove();
+            }
+        }
+
+        public async Task SetFirstOrderRelationshipData(List<FirstOrderPropertyConfiguration> configuration, List<AuditLogGetViewModel> auditLogGetViewModels)
         {
             await Parallel.ForEachAsync(configuration, async (propertyConfiguration, cancelationToken) =>
             {
-                await ExtractIdFields(auditLogGetViewModels, propertyConfiguration);
-                //TODO METER EN METODO
-                var strategy = _firstOrderRepositoriesFactory.GetStrategy(propertyConfiguration);
-                var values = (await strategy.GetByIds<ValuableViewModel>(propertyConfiguration.GetKeysFirstOrderData())).ToList();
-                foreach (var item in values)
-                {
-                    propertyConfiguration.SetValueFirstOrderData(item);
-                }
-
-                await HumanizedValues(auditLogGetViewModels, propertyConfiguration);
+                ExtractIdFields(auditLogGetViewModels, propertyConfiguration);
+                GetValuables(propertyConfiguration);
+                HumanizedValues(auditLogGetViewModels, propertyConfiguration);
             });
-
-            //foreach (var entity in configuration)
-            //{
-            //    await ExtractIdFields(auditLogGetViewModels, entity);
-            //}
         }
 
-        private async Task HumanizedValues(List<AuditLogGetViewModel> auditLogGetViewModels, FirstOrderRelationship firstOrderRelationship)
+        public async Task AddValuesViewModel(List<AuditLogGetViewModel> auditLogs)
+        {
+            await Parallel.ForEachAsync(auditLogs, async (auditLog, CancellationToken) =>
+            {
+                var action = ToEnum<AuditType>(auditLog.Action);
+                switch (action)
+                {
+                    case AuditType.Update:
+                        JValueValuesUpdateAction(auditLog.NewValues, auditLog.OldValues, auditLog);
+                        break;
+                    case AuditType.Create:
+                        JValuesAction(auditLog.NewValues, auditLog, action);
+                        break;
+                    case AuditType.Delete:
+                        JValuesAction(auditLog.OldValues, auditLog, action);
+                        break;
+                }
+            });
+        }
+
+        public async Task AddUserViewModel(List<AuditLogGetViewModel> auditLogs, List<UserViewModel> userViewModels)
+        {
+            foreach (var auditLog in auditLogs)
+            {
+                auditLog.User = userViewModels.FirstOrDefault(p => p.Id == auditLog.UserId);
+            }
+        }
+
+        public void OrderByDateTime(List<AuditLogGetViewModel> auditLogs)
+        {
+            var orderedAuditLogs = auditLogs
+                .OrderBy(log => log.DateTime)
+                .ToList();
+        }
+        #region Private Methods 
+
+        private async Task GetValuables(FirstOrderPropertyConfiguration propertyConfiguration)
+        {
+            var strategy = _firstOrderRepositoriesFactory.GetStrategy(propertyConfiguration);
+            var values = (await strategy.GetByIds<ValuableViewModel>(propertyConfiguration.GetKeysFirstOrderData())).ToList();
+            foreach (var item in values)
+            {
+                propertyConfiguration.SetValueFirstOrderData(item);
+            }
+        }
+
+        private async Task HumanizedValues(List<AuditLogGetViewModel> auditLogGetViewModels, FirstOrderPropertyConfiguration firstOrderRelationship)
         {
             var ids = firstOrderRelationship.GetAuditLogIds();
             var entities = auditLogGetViewModels.Where(p => ids.Contains(p.Id));
@@ -73,91 +123,57 @@ namespace Dummy.Audit.Core.Services.Strategies
             }
         }
 
-        private void ReplaceJsonProperties(JObject? jValues, FirstOrderRelationship firstOrderRelationship)
+        private void ReplaceJsonProperties(JObject? jValues, FirstOrderPropertyConfiguration firstOrderRelationship)
         {
             if (jValues == null)
             {
                 return;
             }
             var property = jValues.Property(firstOrderRelationship.PropertyName);
-            if (property == null || string.IsNullOrEmpty(property.Value.ToString())) //TODO : Validar el value que sea int
+            if (property == null || string.IsNullOrEmpty(property.Value.ToString()) || property.Type == JTokenType.Integer)
             {
                 return;
             }
             var newValue = firstOrderRelationship.GetKeyValue((int)property.Value);
-            property.Replace(new JProperty(firstOrderRelationship.PropertyName, string.Join(", ", newValue)));
+            property.Replace(new JProperty(firstOrderRelationship.PropertyName, newValue));
         }
 
-        public async Task BuildResult(List<AuditLogGetViewModel> auditLogs, /*List<FirstOrderRelationship> firstOrders,*/ List<UserViewModel> userViewModels)
+        private void JValuesAction(JObject? jValues, AuditLogGetViewModel auditLog, AuditType auditType)
         {
-            await Parallel.ForEachAsync(auditLogs, async (auditLog, CancellationToken) =>
-            {
-                auditLog.User = userViewModels.Find(p => p.Id == auditLog.UserId);
-                var action = ToEnum<AuditType>(auditLog.Action);
-                switch (action)
-                {
-                    case AuditType.Update:
-                        //ContainPrimaryKey(auditLog.NewValues, auditLog.Id, firstOrders);
-                        //ContainPrimaryKey(auditLog.OldValues, auditLog.Id, firstOrders);
-                        JValuesAction(auditLog.NewValues, auditLog);
-                        JValuesAction(auditLog.OldValues, auditLog);
-                        break;
-                    case AuditType.Create:
-                        //ContainPrimaryKey(auditLog.NewValues, auditLog.Id, firstOrders);
-                        JValuesAction(auditLog.NewValues, auditLog);
-                        break;
-                    case AuditType.Delete:
-                        //ContainPrimaryKey(auditLog.NewValues, auditLog.Id, firstOrders);
-                        JValuesAction(auditLog.OldValues, auditLog);
-                        break;
-                }
-            });
+            if (!jValues.HasValues)
+                return;
+
+            if(auditType == AuditType.Create)
+                auditLog.Values.AddRange(jValues.Properties()
+                    .Select(value => new ValuesViewModel
+                    {
+                        FieldName = PropertiesNames.ResourceManager.GetString(value.Name),
+                        NewValue = auditType == AuditType.Create || auditType == AuditType.Update ? (value.Value.ToString() == "" ? null : value.Value.ToString() ): null,
+                        OldValue = null,
+                    }));
+
+            if(auditType == AuditType.Delete)
+                auditLog.Values.AddRange(jValues.Properties()
+                    .Select(value => new ValuesViewModel
+                    {
+                        FieldName = PropertiesNames.ResourceManager.GetString(value.Name),
+                        OldValue = auditType == AuditType.Create || auditType == AuditType.Update ? (value.Value.ToString() == "" ? null : value.Value.ToString()) : null,
+                        NewValue = null,
+                    }));
         }
 
-        #region Private Methods 
-
-        private void JValuesAction(JObject? jValues, AuditLogGetViewModel auditLog)
+        private void JValueValuesUpdateAction(JObject? jNewValues, JObject? JOldValue, AuditLogGetViewModel auditLog)
         {
-            auditLog.Values.AddRange(jValues.Properties()
+            if (!jNewValues.HasValues)
+                return;
+
+            auditLog.Values.AddRange(jNewValues.Properties()
                 .Select(value => new ValuesViewModel
                 {
-                    FieldName = value.Name,
+                    FieldName = PropertiesNames.ResourceManager.GetString(value.Name),
                     NewValue = value.Value.ToString() == "" ? null : value.Value.ToString(),
-                    OldValue = null
+                    OldValue = string.IsNullOrEmpty(JOldValue.GetValue(value.Name).ToString()) ? null : JOldValue.GetValue(value.Name).ToString(),
                 }));
-        }
-
-        private void ContainPrimaryKey(JObject? jValue, int auditLogId, List<FirstOrderRelationship> firstOrders)
-        {
-            //Parallel.ForEach(firstOrders, fo =>
-            //{
-            //    if (fo.ContainsSpecificId(auditLogId))
-            //    {
-            //        var property = jValue.Property(fo.PropertyName);
-            //        if (property.Value.ToString() != "{}" && property != null)
-            //        {
-            //            var newValue = fo.GetKeyValue((int)property.Value);
-            //            property.Replace(new JProperty(fo.PropertyName, newValue));
-            //        }
-            //    }
-            //});
-            foreach (var entity in firstOrders)
-            {
-                if (entity.ContainsSpecificId(auditLogId))
-                {
-                    var property = jValue.Property(entity.PropertyName);
-                    if (property != null && !string.IsNullOrEmpty(property.Value.ToString()))
-                    {
-                        var newValue = entity.GetKeyValue((int)property.Value);
-                        property.Replace(new JProperty(entity.PropertyName, string.Join(", ", newValue)));
-                    }
-                }
-            }
-        }
-
-        private string FindTransalte(string key)
-        {
-            return _valuesDictionary.FindTranslate(key);
         }
 
         private T ToEnum<T>(string value)
@@ -165,7 +181,7 @@ namespace Dummy.Audit.Core.Services.Strategies
             return (T)Enum.Parse(typeof(T), value, true);
         }
 
-        private void AddFirstOrderConfiguration(JObject? json, FirstOrderRelationship configuration, int auditId)
+        private void AddFirstOrderConfiguration(JObject? json, FirstOrderPropertyConfiguration configuration, int auditId)
         {
             if (json == null)
             {
@@ -194,7 +210,7 @@ namespace Dummy.Audit.Core.Services.Strategies
         }
 
 
-        private async Task ExtractIdFields(IEnumerable<AuditLogGetViewModel> auditLogs, FirstOrderRelationship configuration)
+        private async Task ExtractIdFields(IEnumerable<AuditLogGetViewModel> auditLogs, FirstOrderPropertyConfiguration configuration)
         {
             foreach (var auditLog in auditLogs.Where(p => (p.NewValues != null && p.NewValues.ContainsKey(configuration.PropertyName))
                                                     || (p.OldValues != null && p.OldValues.ContainsKey(configuration.PropertyName))))
@@ -205,107 +221,5 @@ namespace Dummy.Audit.Core.Services.Strategies
         }
 
         #endregion
-
-        //public virtual ValuesViewModel AddValues<T>(List<Object> dataForeingKeys, Dictionary<string, JsonElement>? newValues, Dictionary<string, JsonElement>? oldValues, string fieldName, AuditType auditType) where T : class, IEntity
-        //{
-        //    var valuesViewModel = new ValuesViewModel();
-        //    valuesViewModel.FieldName = FindTransalte(fieldName);
-
-        //    if (newValues is not null)
-        //    {
-        //        try
-        //        {
-        //            var idNewValue = newValues[fieldName].TryGetInt32(out int idNew);
-        //            valuesViewModel.NewValue = (auditType == AuditType.Create || auditType == AuditType.Update) ? dataForeingKeys.Where(p => p is T && (int)(p as T).Id == idNew)
-        //                                                        .Select(p => (p as T).Name).FirstOrDefault() : null;
-        //            valuesViewModel.OldValue = null;
-        //        }
-        //        catch
-        //        {
-        //            valuesViewModel.NewValue = null;
-        //        }
-
-        //    }
-
-        //    if (oldValues is not null)
-        //    {
-        //        try
-        //        {
-        //            var idOldValue = oldValues[fieldName].TryGetInt32(out int idOld);
-        //            valuesViewModel.OldValue = auditType == AuditType.Delete || auditType == AuditType.Update ? dataForeingKeys.Where(p => p is T && (int)(p as T).Id == idOld)
-        //                                    .Select(p => (p as T).Name).FirstOrDefault() : null;
-        //            valuesViewModel.NewValue = null;
-        //        }
-        //        catch
-        //        {
-        //            valuesViewModel.OldValue = null;
-        //        }
-        //    }
-        //    return valuesViewModel;
-        //}
-
-
-
-
-        //public async Task<bool> ValidateOperation(Dictionary<string, JsonElement>? newValues, Dictionary<string, JsonElement>? oldValues, string fieldName, AuditType auditType)
-        //{
-        //    bool validate = false;
-
-        //    if (auditType == AuditType.Create)
-        //    {
-
-        //        if (newValues != null && newValues.ContainsKey(fieldName))
-        //        {
-        //            if (newValues[fieldName].ToString() == "")
-        //            {
-        //                validate = false;
-        //            }
-        //            else
-        //            {
-        //                validate = true;
-        //            }
-        //        }
-        //    }
-        //    else if (auditType == AuditType.Delete)
-        //    {
-        //        if (oldValues != null && oldValues.ContainsKey(fieldName))
-        //        {
-        //            if (oldValues[fieldName].ToString() == "")
-        //            {
-        //                validate = true;
-        //            }
-        //            else
-        //            {
-        //                validate = true;
-        //            }
-        //        }
-        //    }
-        //    else if (auditType == AuditType.Update)
-        //    {
-        //        if (newValues != null && newValues.ContainsKey(fieldName))
-        //        {
-        //            if (newValues[fieldName].ToString() == "")
-        //            {
-        //                validate = false;
-        //            }
-        //            else
-        //            {
-        //                validate = true;
-        //            }
-        //        }
-        //        if (oldValues != null && oldValues.ContainsKey(fieldName))
-        //        {
-        //            if (oldValues[fieldName].ToString() == "" && validate == false)
-        //            {
-        //                validate = false;
-        //            }
-        //            else
-        //            {
-        //                validate = true;
-        //            }
-        //        }
-        //    }
-        //    return validate;
-        //}
     }
 }

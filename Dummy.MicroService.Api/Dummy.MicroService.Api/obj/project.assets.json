@@ -1096,7 +1096,7 @@
           "buildTransitive/netcoreapp3.1/_._": {}
         }
       },
-      "Dummy.Audit.Core/1.0.0": {
+      "Audit.Core/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v8.0",
         "dependencies": {
@@ -1106,10 +1106,10 @@
           "Pomelo.EntityFrameworkCore.MySql": "8.0.2"
         },
         "compile": {
-          "bin/placeholder/Dummy.Audit.Core.dll": {}
+          "bin/placeholder/Audit.Core.dll": {}
         },
         "runtime": {
-          "bin/placeholder/Dummy.Audit.Core.dll": {}
+          "bin/placeholder/Audit.Core.dll": {}
         }
       }
     }
@@ -3144,15 +3144,15 @@
         "useSharedDesignerContext.txt"
       ]
     },
-    "Dummy.Audit.Core/1.0.0": {
+    "Audit.Core/1.0.0": {
       "type": "project",
-      "path": "../Dummy.Audit.Core/Dummy.Audit.Core.csproj",
-      "msbuildProject": "../Dummy.Audit.Core/Dummy.Audit.Core.csproj"
+      "path": "../Dummy.Audit.Core/Audit.Core.csproj",
+      "msbuildProject": "../Dummy.Audit.Core/Audit.Core.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net8.0": [
-      "Dummy.Audit.Core >= 1.0.0",
+      "Audit.Core >= 1.0.0",
       "Microsoft.EntityFrameworkCore >= 8.0.7",
       "Microsoft.EntityFrameworkCore.Design >= 8.0.7",
       "Microsoft.EntityFrameworkCore.Tools >= 8.0.7",
@@ -3167,9 +3167,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Proyectos\\Maipu\\Timm30\\Spike2753\\SP-2573Prototype\\Dummy.MicroService.Api\\Dummy.MicroService.Api\\Dummy.MicroService.Api.csproj",
-      "projectName": "Dummy.MicroService.Api",
-      "projectPath": "C:\\Proyectos\\Maipu\\Timm30\\Spike2753\\SP-2573Prototype\\Dummy.MicroService.Api\\Dummy.MicroService.Api\\Dummy.MicroService.Api.csproj",
+      "projectUniqueName": "C:\\Proyectos\\Maipu\\Timm30\\Spike2753\\SP-2573Prototype\\Dummy.MicroService.Api\\Dummy.MicroService.Api\\MicroService.Api.csproj",
+      "projectName": "MicroService.Api",
+      "projectPath": "C:\\Proyectos\\Maipu\\Timm30\\Spike2753\\SP-2573Prototype\\Dummy.MicroService.Api\\Dummy.MicroService.Api\\MicroService.Api.csproj",
       "packagesPath": "C:\\Users\\facundo.coronel\\.nuget\\packages\\",
       "outputPath": "C:\\Proyectos\\Maipu\\Timm30\\Spike2753\\SP-2573Prototype\\Dummy.MicroService.Api\\Dummy.MicroService.Api\\obj\\",
       "projectStyle": "PackageReference",
@@ -3188,8 +3188,8 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\Proyectos\\Maipu\\Timm30\\Spike2753\\SP-2573Prototype\\Dummy.MicroService.Api\\Dummy.Audit.Core\\Dummy.Audit.Core.csproj": {
-              "projectPath": "C:\\Proyectos\\Maipu\\Timm30\\Spike2753\\SP-2573Prototype\\Dummy.MicroService.Api\\Dummy.Audit.Core\\Dummy.Audit.Core.csproj"
+            "C:\\Proyectos\\Maipu\\Timm30\\Spike2753\\SP-2573Prototype\\Dummy.MicroService.Api\\Dummy.Audit.Core\\Audit.Core.csproj": {
+              "projectPath": "C:\\Proyectos\\Maipu\\Timm30\\Spike2753\\SP-2573Prototype\\Dummy.MicroService.Api\\Dummy.Audit.Core\\Audit.Core.csproj"
             }
           }
         }

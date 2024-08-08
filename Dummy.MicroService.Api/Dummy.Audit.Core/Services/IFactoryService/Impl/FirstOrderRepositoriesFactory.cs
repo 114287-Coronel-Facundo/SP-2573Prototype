@@ -20,7 +20,7 @@ namespace Dummy.Audit.Core.Services.IFactoryService.Impl
         }
 
 
-        public IFirstOrderRepository GetStrategy(FirstOrderRelationship firstOrderConfiguration)
+        public IFirstOrderRepository GetStrategy(FirstOrderPropertyConfiguration firstOrderConfiguration)
         {
             switch (firstOrderConfiguration.TableName)
             {

@@ -31,7 +31,7 @@ namespace Dummy.Audit.Core.Repositories.Impl
             var sql = @"SELECT * 
                         FROM AuditLogs 
                         WHERE TableName = @tableName 
-                        AND JSON_VALUE(PrimaryKey, '$.Id') = @primaryKey";
+                        AND JSON_VALUE(PrimaryKey, '$.Id') = @primaryKey order by DateTime desc";
 
             var result = await _context.Auditlogs
                 .FromSqlRaw(sql,

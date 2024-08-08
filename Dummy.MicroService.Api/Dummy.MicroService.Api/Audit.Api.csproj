@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Dummy.Audit.Core\Dummy.Audit.Core.csproj" />
+    <ProjectReference Include="..\Dummy.Audit.Core\Audit.Core.csproj" />
   </ItemGroup>
 
 </Project>

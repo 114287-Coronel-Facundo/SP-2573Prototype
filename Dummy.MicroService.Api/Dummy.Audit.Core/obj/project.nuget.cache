@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "7UXDt9Mw2ePZkApyoyMLnZpe8U0tDbraPqhURDoYe7ZNfCJtHtvfkv8WYgsRw/jBpEgM7evQb9NOFO1mnBZPLw==",
+  "dgSpecHash": "Is4tgrc+JixoYIBX7RwqRfY891NuklV4wjOcG8kq3bBONldDwFZT7Sc4xWy876uGk101YLOE2mAwhAzoAtLsJA==",
   "success": true,
-  "projectFilePath": "C:\\Proyectos\\Maipu\\Timm30\\Spike2753\\SP-2573Prototype\\Dummy.MicroService.Api\\Dummy.Audit.Core\\Dummy.Audit.Core.csproj",
+  "projectFilePath": "C:\\Proyectos\\Maipu\\Timm30\\Spike2753\\SP-2573Prototype\\Dummy.MicroService.Api\\Dummy.Audit.Core\\Audit.Core.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\facundo.coronel\\.nuget\\packages\\automapper\\13.0.1\\automapper.13.0.1.nupkg.sha512",
     "C:\\Users\\facundo.coronel\\.nuget\\packages\\microsoft.entityframeworkcore\\8.0.7\\microsoft.entityframeworkcore.8.0.7.nupkg.sha512",

@@ -4,12 +4,12 @@
     "C:\\Proyectos\\Maipu\\Timm30\\Spike2753\\SP-2573Prototype\\Dummy.MicroService.Api\\Dummy.MicroService.Api\\Dummy.MicroService.Api.csproj": {}
   },
   "projects": {
-    "C:\\Proyectos\\Maipu\\Timm30\\Spike2753\\SP-2573Prototype\\Dummy.MicroService.Api\\Dummy.Audit.Core\\Dummy.Audit.Core.csproj": {
+    "C:\\Proyectos\\Maipu\\Timm30\\Spike2753\\SP-2573Prototype\\Dummy.MicroService.Api\\Dummy.Audit.Core\\Audit.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Proyectos\\Maipu\\Timm30\\Spike2753\\SP-2573Prototype\\Dummy.MicroService.Api\\Dummy.Audit.Core\\Dummy.Audit.Core.csproj",
-        "projectName": "Dummy.Audit.Core",
-        "projectPath": "C:\\Proyectos\\Maipu\\Timm30\\Spike2753\\SP-2573Prototype\\Dummy.MicroService.Api\\Dummy.Audit.Core\\Dummy.Audit.Core.csproj",
+        "projectUniqueName": "C:\\Proyectos\\Maipu\\Timm30\\Spike2753\\SP-2573Prototype\\Dummy.MicroService.Api\\Dummy.Audit.Core\\Audit.Core.csproj",
+        "projectName": "Audit.Core",
+        "projectPath": "C:\\Proyectos\\Maipu\\Timm30\\Spike2753\\SP-2573Prototype\\Dummy.MicroService.Api\\Dummy.Audit.Core\\Audit.Core.csproj",
         "packagesPath": "C:\\Users\\facundo.coronel\\.nuget\\packages\\",
         "outputPath": "C:\\Proyectos\\Maipu\\Timm30\\Spike2753\\SP-2573Prototype\\Dummy.MicroService.Api\\Dummy.Audit.Core\\obj\\",
         "projectStyle": "PackageReference",
@@ -101,8 +101,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Proyectos\\Maipu\\Timm30\\Spike2753\\SP-2573Prototype\\Dummy.MicroService.Api\\Dummy.Audit.Core\\Dummy.Audit.Core.csproj": {
-                "projectPath": "C:\\Proyectos\\Maipu\\Timm30\\Spike2753\\SP-2573Prototype\\Dummy.MicroService.Api\\Dummy.Audit.Core\\Dummy.Audit.Core.csproj"
+              "C:\\Proyectos\\Maipu\\Timm30\\Spike2753\\SP-2573Prototype\\Dummy.MicroService.Api\\Dummy.Audit.Core\\Audit.Core.csproj": {
+                "projectPath": "C:\\Proyectos\\Maipu\\Timm30\\Spike2753\\SP-2573Prototype\\Dummy.MicroService.Api\\Dummy.Audit.Core\\Audit.Core.csproj"
               }
             }
           }

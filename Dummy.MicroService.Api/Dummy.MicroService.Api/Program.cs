@@ -40,7 +40,6 @@ builder.Services.AddAutoMapper(typeof(AuditLogMapper));
 
 builder.Services.AddScoped<IAuditLogRepository, AuditLogRepository>();
 builder.Services.AddScoped<IAuditLogService, AuditLogService>();
-builder.Services.AddScoped<IFirstOrdersRepository1, FirstOrdersRepository>();
 builder.Services.AddScoped<IFactoryAuditService, FactoryAuditService>();
 builder.Services.AddScoped<IOrdersAuditService, OrdersAuditService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
@@ -48,8 +47,18 @@ builder.Services.AddScoped<IFirstOrderRepositoriesFactory, FirstOrderRepositorie
 builder.Services.AddScoped<IOrderTypesRepository, OrderTypesRepository>();
 builder.Services.AddScoped<IOrderColorCubesRepository, OrderColorCubesRepository>();
 
+builder.Services.AddCors(o => o.AddPolicy("AllowOrigin", builder =>
+{
+    builder.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+
+}));
+
 
 var app = builder.Build();
+
+app.UseCors("AllowOrigin");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

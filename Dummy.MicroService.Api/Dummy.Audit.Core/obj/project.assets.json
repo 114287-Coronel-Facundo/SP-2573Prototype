@@ -800,9 +800,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Proyectos\\Maipu\\Timm30\\Spike2753\\SP-2573Prototype\\Dummy.MicroService.Api\\Dummy.Audit.Core\\Dummy.Audit.Core.csproj",
-      "projectName": "Dummy.Audit.Core",
-      "projectPath": "C:\\Proyectos\\Maipu\\Timm30\\Spike2753\\SP-2573Prototype\\Dummy.MicroService.Api\\Dummy.Audit.Core\\Dummy.Audit.Core.csproj",
+      "projectUniqueName": "C:\\Proyectos\\Maipu\\Timm30\\Spike2753\\SP-2573Prototype\\Dummy.MicroService.Api\\Dummy.Audit.Core\\Audit.Core.csproj",
+      "projectName": "Audit.Core",
+      "projectPath": "C:\\Proyectos\\Maipu\\Timm30\\Spike2753\\SP-2573Prototype\\Dummy.MicroService.Api\\Dummy.Audit.Core\\Audit.Core.csproj",
       "packagesPath": "C:\\Users\\facundo.coronel\\.nuget\\packages\\",
       "outputPath": "C:\\Proyectos\\Maipu\\Timm30\\Spike2753\\SP-2573Prototype\\Dummy.MicroService.Api\\Dummy.Audit.Core\\obj\\",
       "projectStyle": "PackageReference",

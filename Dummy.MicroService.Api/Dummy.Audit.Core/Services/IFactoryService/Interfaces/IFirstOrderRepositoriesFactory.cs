@@ -10,6 +10,6 @@ namespace Dummy.Audit.Core.Services.IFactoryService.Interfaces
 {
     public interface IFirstOrderRepositoriesFactory
     {
-        IFirstOrderRepository GetStrategy(FirstOrderRelationship firstOrderConfiguration);
+        IFirstOrderRepository GetStrategy(FirstOrderPropertyConfiguration firstOrderConfiguration);
     }
 }

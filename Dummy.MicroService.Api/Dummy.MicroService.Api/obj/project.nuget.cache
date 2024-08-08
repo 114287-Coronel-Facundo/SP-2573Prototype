@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "bBAMGIvYYiybSEAt+7F+rJ0C3Refp/oOpK0tGCe/abxm2Iwo6xXPCYwUIV7wb1Plg4V/oS/eUysY82TPfE9ifA==",
+  "dgSpecHash": "rLWXv+6/N/ngCbehgNOIZ8lYg9NmHw0tpxrJFh0/owBjxiPc7tcVssuHo1mFV/LPj9wh+Bv7F41RdeOMFAUIiw==",
   "success": true,
-  "projectFilePath": "C:\\Proyectos\\Maipu\\Timm30\\Spike2753\\SP-2573Prototype\\Dummy.MicroService.Api\\Dummy.MicroService.Api\\Dummy.MicroService.Api.csproj",
+  "projectFilePath": "C:\\Proyectos\\Maipu\\Timm30\\Spike2753\\SP-2573Prototype\\Dummy.MicroService.Api\\Dummy.MicroService.Api\\MicroService.Api.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\facundo.coronel\\.nuget\\packages\\automapper\\13.0.1\\automapper.13.0.1.nupkg.sha512",
     "C:\\Users\\facundo.coronel\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
